@@ -61,6 +61,19 @@
   box-sizing: border-box;
 }
 
+.day-circle {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.day-circle.today {
+  background-color: #E96354;
+}
+
 .day-cell.empty {
   /* Don't use visibility: hidden, just make it transparent */
 }
@@ -69,18 +82,13 @@
   opacity: 0;
 }
 
-.day-cell.today {
-  background-color: #007aff;
-  border-radius: 50%;
-}
-
 .day-text {
   font-size: 30rpx;
   color: #333;
   font-weight: 500;
 }
 
-.day-cell.today .day-text {
+.day-circle.today .day-text {
   color: white;
   font-weight: bold;
 }
