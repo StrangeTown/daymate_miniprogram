@@ -7,12 +7,14 @@
   left: 0;
   right: 0;
   height: 80rpx;
-  background-color: #6c757d;
+  /* subtle diagonal gradient */
+  background: linear-gradient(90deg, #5a6b77 0%, #6c757d 40%, #7f8a92 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
-  border-bottom: 1rpx solid #adb5bd;
+  border-bottom: 1rpx solid rgba(173, 181, 189, 0.25);
+  box-shadow: 0 6rpx 18rpx rgba(0,0,0,0.08);
 }
 
 .countdown-text {
@@ -125,7 +127,7 @@
 .day-circle.today::after {
   content: '';
   position: absolute;
-  bottom: 0rpx;
+  bottom: 2rpx;
   left: 50%;
   transform: translateX(-50%);
   width: 8rpx;
