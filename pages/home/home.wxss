@@ -97,7 +97,40 @@
 }
 
 .day-circle.today {
+  position: relative;
+}
+
+.day-circle.today::after {
+  content: '';
+  position: absolute;
+  bottom: 0rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8rpx;
+  height: 8rpx;
   background-color: #E96354;
+  border-radius: 50%;
+}
+
+.day-circle.has-event {
+  background-color: #E96354;
+}
+
+.day-circle.today.has-event {
+  position: relative;
+  background-color: #E96354;
+}
+
+.day-circle.today.has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8rpx;
+  height: 8rpx;
+  background-color: #E96354;
+  border-radius: 50%;
 }
 
 .day-cell.empty {
@@ -114,8 +147,13 @@
   font-weight: 500;
 }
 
-.day-circle.today .day-text {
+.day-circle.has-event .day-text {
   color: white;
+  font-weight: bold;
+}
+
+.day-circle.today .day-text {
+  color: #333;
   font-weight: bold;
 }
 

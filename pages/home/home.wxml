@@ -35,8 +35,8 @@
             wx:for-item="day"
             class="day-cell {{day.isEmpty ? 'empty' : ''}}"
           >
-            <view class="day-circle {{day.isToday ? 'today' : ''}}">
-              <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.day}}</text>
+            <view class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}}">
+              <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.event || day.day}}</text>
             </view>
           </view>
         </view>

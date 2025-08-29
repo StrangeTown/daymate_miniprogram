@@ -5,7 +5,19 @@ Page({
 	 */
 	data: {
 		calendars: [],
-		countdownDays: 0
+		countdownDays: 0,
+		mockData: [
+			{
+				title: '九三阅兵',
+				emoji: '🎖️',
+				date: '2025-09-03'
+			},
+			{
+				title: '苹果发布会',
+				emoji: '🍎',
+				date: '2025-09-10'
+			}
+		]
 	},
 
 	/**
@@ -40,6 +52,15 @@ Page({
 		this.setData({
 			countdownDays: daysDiff
 		});
+	},
+
+	/**
+	 * Get event for a specific date
+	 */
+	getEventForDate(year, month, day) {
+		const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+		const event = this.data.mockData.find(event => event.date === dateStr);
+		return event ? event.title.charAt(0) : null;
 	},
 
 	/**
@@ -116,11 +137,13 @@ Page({
 			// Add days from current week Sunday to end of month
 			for (let day = startDate; day <= endDate; day++) {
 				const isToday = day === today.getDate();
+				const eventEmoji = this.getEventForDate(year, month, day);
 
 				days.push({
 					day: day,
 					isEmpty: false,
 					isToday: isToday,
+					event: eventEmoji,
 				});
 			}
 		} else {
@@ -141,10 +164,13 @@ Page({
 
 			// Add days of the month
 			for (let day = 1; day <= daysInMonth; day++) {
+				const eventEmoji = this.getEventForDate(year, month, day);
+
 				days.push({
 					day: day,
 					isEmpty: false,
 					isToday: false, // Future months won't have today
+					event: eventEmoji,
 				});
 			}
 		}
