@@ -28,7 +28,8 @@ Page({
 				today.getMonth() + i,
 				1
 			);
-			calendars.push(this.generateSingleCalendar(currentDate));
+			const isCurrentMonth = i === 0;
+			calendars.push(this.generateSingleCalendar(currentDate, isCurrentMonth));
 		}
 
 		this.setData({
@@ -39,7 +40,7 @@ Page({
 	/**
 	 * Generate single month calendar
 	 */
-	generateSingleCalendar(date) {
+	generateSingleCalendar(date, isCurrentMonth = false) {
 		const year = date.getFullYear();
 		const month = date.getMonth();
 		const today = new Date();
@@ -69,27 +70,63 @@ Page({
 		// Generate calendar days
 		const days = [];
 
-		// Add empty cells for days before month starts
-		for (let i = 0; i < startWeekDay; i++) {
-			days.push({
-				day: "",
-				isEmpty: true,
-				isToday: false,
-			});
-		}
+		if (isCurrentMonth) {
+			// For current month, start from the Sunday of current week
+			const todayDayOfWeek = today.getDay(); // 0 = Sunday
+			const currentWeekStart = new Date(today);
+			currentWeekStart.setDate(today.getDate() - todayDayOfWeek);
+			
+			// Calculate how many days to show (from current week Sunday to end of month)
+			const lastDay = new Date(year, month + 1, 0);
+			const startDate = currentWeekStart.getDate();
+			const endDate = lastDay.getDate();
+			
+			console.log(`Current week starts on: ${currentWeekStart.getDate()}, Month ends on: ${endDate}`);
+			
+			// Add empty cells for days before current week starts (should be 0 since we start on Sunday)
+			const startWeekDay = 0; // Always start on Sunday
+			for (let i = 0; i < startWeekDay; i++) {
+				days.push({
+					day: "",
+					isEmpty: true,
+					isToday: false,
+				});
+			}
 
-		// Add days of the month
-		for (let day = 1; day <= daysInMonth; day++) {
-			const isToday =
-				year === today.getFullYear() &&
-				month === today.getMonth() &&
-				day === today.getDate();
+			// Add days from current week Sunday to end of month
+			for (let day = startDate; day <= endDate; day++) {
+				const isToday = day === today.getDate();
 
-			days.push({
-				day: day,
-				isEmpty: false,
-				isToday: isToday,
-			});
+				days.push({
+					day: day,
+					isEmpty: false,
+					isToday: isToday,
+				});
+			}
+		} else {
+			// For future months, show full month
+			const firstDay = new Date(year, month, 1);
+			const lastDay = new Date(year, month + 1, 0);
+			const daysInMonth = lastDay.getDate();
+			const startWeekDay = firstDay.getDay(); // 0 = Sunday
+
+			// Add empty cells for days before month starts
+			for (let i = 0; i < startWeekDay; i++) {
+				days.push({
+					day: "",
+					isEmpty: true,
+					isToday: false,
+				});
+			}
+
+			// Add days of the month
+			for (let day = 1; day <= daysInMonth; day++) {
+				days.push({
+					day: day,
+					isEmpty: false,
+					isToday: false, // Future months won't have today
+				});
+			}
 		}
 
 		// Fill remaining cells to complete the last week (total should be multiple of 7)
