@@ -6,8 +6,19 @@ Page({
 	data: {
 		calendars: [],
 		countdownDays: 0,
-		countdownTitle: '',
-		mockData: [
+		countdownTitle: ''
+	},
+
+	/**
+	 * Get mock data from global or local fallback
+	 */
+	getMockData() {
+		const app = getApp();
+		if (app.globalData && app.globalData.mockData) {
+			return app.globalData.mockData;
+		}
+		// Fallback to local data
+		return [
 			{
 				title: '九三阅兵',
 				emoji: '🎖️',
@@ -18,7 +29,7 @@ Page({
 				emoji: '🍎',
 				date: '2025-09-10'
 			}
-		]
+		];
 	},
 
 	/**
@@ -37,7 +48,7 @@ Page({
 		today.setHours(0, 0, 0, 0); // Set to start of day for accurate comparison
 		
 		// Find all upcoming events
-		const upcomingEvents = this.data.mockData
+		const upcomingEvents = this.getMockData()
 			.map(event => {
 				const eventDate = new Date(event.date);
 				eventDate.setHours(0, 0, 0, 0);
@@ -72,7 +83,7 @@ Page({
 	 */
 	getEventObjectForDate(year, month, day) {
 		const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-		const event = this.data.mockData.find(event => event.date === dateStr);
+		const event = this.getMockData().find(event => event.date === dateStr);
 		return event || null;
 	},
 

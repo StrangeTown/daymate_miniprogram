@@ -14,6 +14,18 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    mockData: [
+      {
+        title: '九三阅兵',
+        emoji: '🎖️',
+        date: '2025-09-03'
+      },
+      {
+        title: '苹果发布会',
+        emoji: '🍎',
+        date: '2025-09-10'
+      }
+    ]
   }
 })

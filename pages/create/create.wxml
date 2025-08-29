@@ -1,3 +1,36 @@
 <!--pages/create/create.wxml-->
-<navigation-bar title="Create" back="{{true}}" color="black" background="#FFF"></navigation-bar>
-<text>pages/create/create.wxml</text>
+<navigation-bar title="创建活动" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="create-container">
+  <view class="form-section">
+    <view class="input-group">
+      <text class="input-label">活动名称</text>
+      <input
+        class="input-field"
+        type="text"
+        placeholder="请输入活动名称"
+        value="{{eventTitle}}"
+        bindinput="onTitleInput"
+      />
+    </view>
+
+    <view class="input-group">
+      <text class="input-label">活动日期</text>
+      <picker
+        mode="date"
+        value="{{eventDate}}"
+        start="{{minDate}}"
+        bindchange="onDateChange"
+      >
+        <view class="date-picker">
+          <text class="date-text">{{eventDate || '请选择日期'}}</text>
+          <text class="picker-icon">📅</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="button-section">
+    <button class="save-button" bindtap="onSaveEvent">保存活动</button>
+  </view>
+</view>
