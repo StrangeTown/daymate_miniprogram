@@ -1,0 +1,38 @@
+<!--pages/home/home.wxml-->
+<navigation-bar title="Home" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="calendar-container">
+  <block wx:for="{{calendars}}" wx:key="index">
+    <view class="calendar-month">
+      <view class="month-header">
+        <text class="month-title">{{item.monthName}} {{item.year}}</text>
+      </view>
+      
+      <view class="calendar-grid">
+        <!-- Week day headers -->
+        <view class="week-header">
+          <view class="day-header">日</view>
+          <view class="day-header">一</view>
+          <view class="day-header">二</view>
+          <view class="day-header">三</view>
+          <view class="day-header">四</view>
+          <view class="day-header">五</view>
+          <view class="day-header">六</view>
+        </view>
+        
+        <!-- Calendar weeks -->
+        <view wx:for="{{item.weeks}}" wx:key="weekIndex" wx:for-index="weekIndex" class="week-row">
+          <view 
+            wx:for="{{item}}" 
+            wx:key="dayIndex" 
+            wx:for-index="dayIndex"
+            wx:for-item="day"
+            class="day-cell {{day.isEmpty ? 'empty' : ''}} {{day.isToday ? 'today' : ''}}"
+          >
+            <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.day}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

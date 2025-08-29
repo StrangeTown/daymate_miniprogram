@@ -1,0 +1,87 @@
+/* pages/home/home.wxss */
+
+.calendar-container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.calendar-month {
+  background-color: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.month-header {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.month-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.calendar-grid {
+  width: 100%;
+}
+
+.week-header {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.day-header {
+  flex: 1;
+  text-align: center;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.week-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10rpx;
+}
+
+.day-cell {
+  flex: 1;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.day-cell.empty {
+  /* Don't use visibility: hidden, just make it transparent */
+}
+
+.day-cell.empty .day-text {
+  opacity: 0;
+}
+
+.day-cell.today {
+  background-color: #007aff;
+  border-radius: 50%;
+}
+
+.day-text {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.day-cell.today .day-text {
+  color: white;
+  font-weight: bold;
+}
+
+/* Hover effect for non-empty days */
+.day-cell:not(.empty):not(.today):active {
+  background-color: #e6f3ff;
+  border-radius: 50%;
+}
