@@ -1,0 +1,3 @@
+<!--pages/create/create.wxml-->
+<navigation-bar title="Create" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<text>pages/create/create.wxml</text>

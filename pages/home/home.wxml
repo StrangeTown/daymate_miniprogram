@@ -40,3 +40,10 @@
   </block>
   </view>
 </scroll-view>
+
+<!-- Fixed Create Button -->
+<view class="create-button-container">
+  <button class="create-button" bindtap="onCreateTap">
+    <text class="create-button-text">创建</text>
+  </button>
+</view>

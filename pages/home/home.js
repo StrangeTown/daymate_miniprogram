@@ -45,12 +45,6 @@ Page({
 		const month = date.getMonth();
 		const today = new Date();
 
-		// Get first day of month and number of days
-		const firstDay = new Date(year, month, 1);
-		const lastDay = new Date(year, month + 1, 0);
-		const daysInMonth = lastDay.getDate();
-		const startWeekDay = firstDay.getDay(); // 0 = Sunday
-
 		// Month names
 		const monthNames = [
 			"一月",
@@ -80,8 +74,6 @@ Page({
 			const lastDay = new Date(year, month + 1, 0);
 			const startDate = currentWeekStart.getDate();
 			const endDate = lastDay.getDate();
-			
-			console.log(`Current week starts on: ${currentWeekStart.getDate()}, Month ends on: ${endDate}`);
 			
 			// Add empty cells for days before current week starts (should be 0 since we start on Sunday)
 			const startWeekDay = 0; // Always start on Sunday
@@ -150,6 +142,17 @@ Page({
 			monthName: monthNames[month],
 			weeks: weeks,
 		};
+	},
+
+	/**
+	 * Handle create button tap
+	 */
+	onCreateTap() {
+		console.log('Create button tapped');
+		// Navigate to create page
+		wx.navigateTo({
+			url: '/pages/create/create'
+		});
 	},
 
 	/**
