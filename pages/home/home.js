@@ -36,8 +36,7 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad(options) {
-		this.generateCalendars();
-		this.calculateCountdown();
+		// Page initialization - moved to onShow for better refresh behavior
 	},
 
 	/**
@@ -331,7 +330,12 @@ Page({
 	/**
 	 * Lifecycle function--Called when page show
 	 */
-	onShow() {},
+	onShow() {
+		// Refresh calendar and countdown when page becomes visible
+		// This ensures updates when returning from create page
+		this.generateCalendars();
+		this.calculateCountdown();
+	},
 
 	/**
 	 * Lifecycle function--Called when page hide

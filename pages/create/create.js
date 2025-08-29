@@ -88,19 +88,12 @@ Page({
 
     app.globalData.mockData.push(newEvent);
 
-    // Show success message
-    wx.showToast({
-      title: '活动创建成功',
-      icon: 'success',
-      duration: 1500
-    });
-
     // Navigate back after a short delay
     setTimeout(() => {
       wx.navigateBack({
         delta: 1
       });
-    }, 1500);
+    }, 500);
   },
 
   /**
