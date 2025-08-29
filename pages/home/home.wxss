@@ -214,12 +214,12 @@
   width: 180rpx !important;
   height: 84rpx !important;
   border-radius: 12rpx;
-  background-color: #E96354;
+  background-color: #6c757d;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 20rpx rgba(233, 99, 84, 0.3);
+  box-shadow: 0 8rpx 20rpx rgba(108, 117, 125, 0.3);
 }
 
 .create-button::after {
@@ -234,5 +234,5 @@
 
 .create-button:active {
   transform: scale(0.95);
-  box-shadow: 0 4rpx 15rpx rgba(233, 99, 84, 0.4);
+  box-shadow: 0 4rpx 15rpx rgba(108, 117, 125, 0.4);
 }
