@@ -239,6 +239,11 @@ Page({
 
 		if (!title || !dateStr) return;
 
+		// Add short vibration for event tap
+		wx.vibrateShort({
+			type: 'light'
+		});
+
 		const today = new Date();
 		today.setHours(0,0,0,0);
 		const eventDate = new Date(dateStr);
@@ -273,6 +278,37 @@ Page({
 			calendars: calendars,
 			countdownDays: daysUntil >= 0 ? daysUntil : 0,
 			countdownTitle: title
+		});
+	},
+
+	/**
+	 * Handle container tap - clear range selection and reset countdown
+	 */
+	onContainerTap(e) {
+		// Clear all range-related flags from calendar days
+		const calendars = this.data.calendars.map(month => {
+			const newWeeks = month.weeks.map(week => {
+				return week.map(day => {
+					if (day.isEmpty) return day;
+					return {
+						...day,
+						inRange: false,
+						isRangeStart: false,
+						isRangeEnd: false
+					};
+				});
+			});
+			return {
+				...month,
+				weeks: newWeeks
+			};
+		});
+
+		// Reset countdown to default (most recent upcoming event)
+		this.calculateCountdown();
+
+		this.setData({
+			calendars: calendars
 		});
 	},
 
