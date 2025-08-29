@@ -5,6 +5,7 @@ Page({
 	 */
 	data: {
 		calendars: [],
+		countdownDays: 0
 	},
 
 	/**
@@ -12,6 +13,33 @@ Page({
 	 */
 	onLoad(options) {
 		this.generateCalendars();
+		this.calculateCountdown();
+	},
+
+	/**
+	 * Calculate countdown days to 9.3 parade
+	 */
+	calculateCountdown() {
+		const today = new Date();
+		const currentYear = today.getFullYear();
+		
+		// 9.3 parade date (September 3rd)
+		let paradeDate = new Date(currentYear, 8, 3); // Month is 0-indexed, so 8 = September
+		
+		// If 9.3 has already passed this year, calculate for next year
+		if (today > paradeDate) {
+			paradeDate = new Date(currentYear + 1, 8, 3);
+		}
+		
+		// Calculate difference in days
+		const timeDiff = paradeDate.getTime() - today.getTime();
+		const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+		
+		console.log(`Days until 9.3 parade: ${daysDiff}`);
+		
+		this.setData({
+			countdownDays: daysDiff
+		});
 	},
 
 	/**
