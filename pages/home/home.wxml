@@ -3,7 +3,7 @@
 
 <!-- Fixed Top Countdown -->
 <view class="countdown-container">
-  <text class="countdown-text">距离9.3阅兵还有{{countdownDays}}天</text>
+  <text class="countdown-text">距离{{countdownTitle}}还有{{countdownDays}}天</text>
 </view>
 
 <scroll-view scroll-y="true" class="calendar-scroll-container">
@@ -35,7 +35,12 @@
             wx:for-item="day"
             class="day-cell {{day.isEmpty ? 'empty' : ''}}"
           >
-            <view class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}}">
+            <view 
+              class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}}"
+              bindtap="onDayTap"
+              data-event-title="{{day.eventObj ? day.eventObj.title : ''}}"
+              data-event-date="{{day.dateStr}}"
+            >
               <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.event || day.day}}</text>
             </view>
           </view>

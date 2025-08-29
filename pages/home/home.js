@@ -6,6 +6,7 @@ Page({
 	data: {
 		calendars: [],
 		countdownDays: 0,
+		countdownTitle: '',
 		mockData: [
 			{
 				title: '九三阅兵',
@@ -29,38 +30,50 @@ Page({
 	},
 
 	/**
-	 * Calculate countdown days to 9.3 parade
+	 * Calculate countdown days to the most recent upcoming event
 	 */
 	calculateCountdown() {
 		const today = new Date();
-		const currentYear = today.getFullYear();
+		today.setHours(0, 0, 0, 0); // Set to start of day for accurate comparison
 		
-		// 9.3 parade date (September 3rd)
-		let paradeDate = new Date(currentYear, 8, 3); // Month is 0-indexed, so 8 = September
+		// Find all upcoming events
+		const upcomingEvents = this.data.mockData
+			.map(event => {
+				const eventDate = new Date(event.date);
+				eventDate.setHours(0, 0, 0, 0);
+				return {
+					...event,
+					eventDate: eventDate,
+					daysUntil: Math.ceil((eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+				};
+			})
+			.filter(event => event.daysUntil >= 0) // Only future events (including today)
+			.sort((a, b) => a.daysUntil - b.daysUntil); // Sort by closest date first
 		
-		// If 9.3 has already passed this year, calculate for next year
-		if (today > paradeDate) {
-			paradeDate = new Date(currentYear + 1, 8, 3);
+		if (upcomingEvents.length > 0) {
+			const nextEvent = upcomingEvents[0];
+			console.log(`Days until ${nextEvent.title}: ${nextEvent.daysUntil}`);
+			
+			this.setData({
+				countdownDays: nextEvent.daysUntil,
+				countdownTitle: nextEvent.title
+			});
+		} else {
+			// No upcoming events
+			this.setData({
+				countdownDays: 0,
+				countdownTitle: '暂无活动'
+			});
 		}
-		
-		// Calculate difference in days
-		const timeDiff = paradeDate.getTime() - today.getTime();
-		const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-		
-		console.log(`Days until 9.3 parade: ${daysDiff}`);
-		
-		this.setData({
-			countdownDays: daysDiff
-		});
 	},
 
 	/**
-	 * Get event for a specific date
+	 * Return event object for a specific date (or null)
 	 */
-	getEventForDate(year, month, day) {
+	getEventObjectForDate(year, month, day) {
 		const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 		const event = this.data.mockData.find(event => event.date === dateStr);
-		return event ? event.title.charAt(0) : null;
+		return event || null;
 	},
 
 	/**
@@ -137,13 +150,16 @@ Page({
 			// Add days from current week Sunday to end of month
 			for (let day = startDate; day <= endDate; day++) {
 				const isToday = day === today.getDate();
-				const eventEmoji = this.getEventForDate(year, month, day);
+				const eventObj = this.getEventObjectForDate(year, month, day);
+				const eventLetter = eventObj ? eventObj.title.charAt(0) : null;
 
 				days.push({
 					day: day,
 					isEmpty: false,
 					isToday: isToday,
-					event: eventEmoji,
+					event: eventLetter,
+					eventObj: eventObj,
+					dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
 				});
 			}
 		} else {
@@ -164,13 +180,16 @@ Page({
 
 			// Add days of the month
 			for (let day = 1; day <= daysInMonth; day++) {
-				const eventEmoji = this.getEventForDate(year, month, day);
+				const eventObj = this.getEventObjectForDate(year, month, day);
+				const eventLetter = eventObj ? eventObj.title.charAt(0) : null;
 
 				days.push({
 					day: day,
 					isEmpty: false,
 					isToday: false, // Future months won't have today
-					event: eventEmoji,
+					event: eventLetter,
+					eventObj: eventObj,
+					dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
 				});
 			}
 		}
@@ -206,6 +225,29 @@ Page({
 		// Navigate to create page
 		wx.navigateTo({
 			url: '/pages/create/create'
+		});
+	},
+
+	/**
+	 * Handle day tap on calendar - if it has an event, update countdown to that event
+	 */
+	onDayTap(e) {
+		// Expect dataset to include event-date and event-title
+		const dataset = e.currentTarget.dataset || {};
+		const title = dataset.eventTitle || '';
+		const dateStr = dataset.eventDate || '';
+
+		if (!title || !dateStr) return;
+
+		const today = new Date();
+		today.setHours(0,0,0,0);
+		const eventDate = new Date(dateStr);
+		eventDate.setHours(0,0,0,0);
+		const daysUntil = Math.ceil((eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+		this.setData({
+			countdownDays: daysUntil >= 0 ? daysUntil : 0,
+			countdownTitle: title
 		});
 	},
 
