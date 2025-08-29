@@ -1,12 +1,13 @@
 <!--pages/home/home.wxml-->
 <navigation-bar title="Home" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 
-<view class="calendar-container">
-  <block wx:for="{{calendars}}" wx:key="index">
-    <view class="calendar-month">
-      <view class="month-header">
-        <text class="month-title">{{item.monthName}} {{item.year}}</text>
-      </view>
+<scroll-view scroll-y="true" class="calendar-scroll-container">
+  <view class="calendar-container">
+    <block wx:for="{{calendars}}" wx:key="index">
+      <view class="calendar-month">
+        <view class="month-header">
+          <text class="month-title">{{item.monthName}} {{item.year}}</text>
+        </view>
       
       <view class="calendar-grid">
         <!-- Week day headers -->
@@ -35,4 +36,5 @@
       </view>
     </view>
   </block>
-</view>
+  </view>
+</scroll-view>
