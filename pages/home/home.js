@@ -245,7 +245,28 @@ Page({
 		eventDate.setHours(0,0,0,0);
 		const daysUntil = Math.ceil((eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
+		// Update calendars to mark in-range days
+		const calendars = this.data.calendars.map(month => {
+			const newWeeks = month.weeks.map(week => {
+				return week.map(day => {
+					if (day.isEmpty) return day;
+					const cellDate = new Date(day.dateStr);
+					cellDate.setHours(0,0,0,0);
+					const inRange = (cellDate.getTime() >= today.getTime() && cellDate.getTime() <= eventDate.getTime());
+					return {
+						...day,
+						inRange: !!inRange
+					};
+				});
+			});
+			return {
+				...month,
+				weeks: newWeeks
+			};
+		});
+
 		this.setData({
+			calendars: calendars,
 			countdownDays: daysUntil >= 0 ? daysUntil : 0,
 			countdownTitle: title
 		});

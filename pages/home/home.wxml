@@ -35,13 +35,16 @@
             wx:for-item="day"
             class="day-cell {{day.isEmpty ? 'empty' : ''}}"
           >
-            <view 
-              class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}}"
-              bindtap="onDayTap"
-              data-event-title="{{day.eventObj ? day.eventObj.title : ''}}"
-              data-event-date="{{day.dateStr}}"
-            >
-              <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.event || day.day}}</text>
+            <!-- full-width bar behind the circle (same height as circle) -->
+            <view class="day-bar {{day.inRange ? 'in-range' : ''}} {{day.event ? 'has-event' : ''}}">
+              <view 
+                class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
+                bindtap="onDayTap"
+                data-event-title="{{day.eventObj ? day.eventObj.title : ''}}"
+                data-event-date="{{day.dateStr}}"
+              >
+                <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.event || day.day}}</text>
+              </view>
             </view>
           </view>
         </view>
