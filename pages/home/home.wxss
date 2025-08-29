@@ -115,6 +115,14 @@
 .day-bar.has-event {
 }
 
+.day-bar.range-start {
+  border-radius: 8rpx 0 0 8rpx;
+}
+
+.day-bar.range-end {
+  border-radius: 0 8rpx 8rpx 0;
+}
+
 .day-circle {
   z-index: 1; /* keep circle above the bar */
   border-radius: 50%;

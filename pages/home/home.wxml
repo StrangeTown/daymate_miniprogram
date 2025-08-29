@@ -36,7 +36,7 @@
             class="day-cell {{day.isEmpty ? 'empty' : ''}}"
           >
             <!-- full-width bar behind the circle (same height as circle) -->
-            <view class="day-bar {{day.inRange ? 'in-range' : ''}} {{day.event ? 'has-event' : ''}}">
+            <view class="day-bar {{day.inRange ? 'in-range' : ''}} {{day.event ? 'has-event' : ''}} {{day.isRangeStart ? 'range-start' : ''}} {{day.isRangeEnd ? 'range-end' : ''}}">
               <view 
                 class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
                 bindtap="onDayTap"

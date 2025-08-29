@@ -253,9 +253,13 @@ Page({
 					const cellDate = new Date(day.dateStr);
 					cellDate.setHours(0,0,0,0);
 					const inRange = (cellDate.getTime() >= today.getTime() && cellDate.getTime() <= eventDate.getTime());
+					const isRangeStart = cellDate.getTime() === today.getTime();
+					const isRangeEnd = cellDate.getTime() === eventDate.getTime();
 					return {
 						...day,
-						inRange: !!inRange
+						inRange: !!inRange,
+						isRangeStart: !!isRangeStart,
+						isRangeEnd: !!isRangeEnd
 					};
 				});
 			});
