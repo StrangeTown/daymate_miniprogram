@@ -2,7 +2,7 @@
 <navigation-bar title="Home" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 
 <!-- Fixed Top Countdown -->
-<view class="countdown-container">
+<view class="countdown-container" bindtap="onCountdownTap">
   <text class="countdown-text">
     距离&nbsp;<text class="countdown-title">{{countdownTitle}}</text>&nbsp;还有<text class="countdown-days">{{countdownDays}}</text>天
   </text>
@@ -70,5 +70,22 @@
   </view>
   <view class="list-button" bindtap="onListTap">
     <image class="list-button-icon" src="/assets/images/text_bullet_list_icon.svg"></image>
+  </view>
+</view>
+
+<!-- Countdown Modal -->
+<view wx:if="{{showModal}}" class="modal-overlay" bindtap="onModalClose">
+  <view class="modal-content" catchtap>
+    <view class="modal-header">
+      <text class="modal-title">活动倒计时</text>
+      <text class="modal-close" bindtap="onModalClose">✕</text>
+    </view>
+    <view class="modal-body">
+      <view class="countdown-display">
+        <text class="countdown-number">{{countdownDays}}</text>
+        <text class="countdown-unit">天</text>
+      </view>
+      <text class="countdown-event">距离 {{countdownTitle}} 还有</text>
+    </view>
   </view>
 </view>

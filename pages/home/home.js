@@ -6,7 +6,8 @@ Page({
 	data: {
 		calendars: [],
 		countdownDays: 0,
-		countdownTitle: ''
+		countdownTitle: '',
+		showModal: false
 	},
 
 	/**
@@ -228,13 +229,20 @@ Page({
 	},
 
 	/**
-	 * Handle create button tap
+	 * Handle countdown container tap
 	 */
-	onCreateTap() {
-		console.log('Create button tapped');
-		// Navigate to create page
-		wx.navigateTo({
-			url: '/pages/create/create'
+	onCountdownTap() {
+		this.setData({
+			showModal: true
+		});
+	},
+
+	/**
+	 * Handle modal close
+	 */
+	onModalClose() {
+		this.setData({
+			showModal: false
 		});
 	},
 
