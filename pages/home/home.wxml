@@ -3,7 +3,9 @@
 
 <!-- Fixed Top Countdown -->
 <view class="countdown-container">
-  <text class="countdown-text">距离{{countdownTitle}}还有{{countdownDays}}天</text>
+  <text class="countdown-text">
+    距离&nbsp;<text class="countdown-title">{{countdownTitle}}</text>&nbsp;还有<text class="countdown-days">{{countdownDays}}</text>天
+  </text>
 </view>
 
 <scroll-view scroll-y="true" class="calendar-scroll-container" bindtap="onContainerTap">
