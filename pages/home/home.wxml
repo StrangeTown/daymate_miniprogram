@@ -63,9 +63,12 @@
   </view>
 </scroll-view>
 
-<!-- Fixed Create Button -->
-<view class="create-button-container">
+<!-- Fixed Buttons -->
+<view class="buttons-container">
   <view class="create-button" bindtap="onCreateTap">
     <image class="create-button-icon" src="/assets/images/add_filled_icon.svg"></image>
+  </view>
+  <view class="list-button" bindtap="onListTap">
+    <image class="list-button-icon" src="/assets/images/text_bullet_list_icon.svg"></image>
   </view>
 </view>

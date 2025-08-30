@@ -239,6 +239,17 @@ Page({
 	},
 
 	/**
+	 * Handle list button tap
+	 */
+	onListTap() {
+		console.log('List button tapped');
+		// Navigate to list page
+		wx.navigateTo({
+			url: '/pages/list/list'
+		});
+	},
+
+	/**
 	 * Handle day tap on calendar - if it has an event, update countdown to that event
 	 */
 	onDayTap(e) {

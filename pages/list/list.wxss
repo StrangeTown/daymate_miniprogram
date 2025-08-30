@@ -1,0 +1,39 @@
+/* pages/list/list.wxss */
+
+.list-container {
+  padding: 20rpx;
+}
+
+.event-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  margin-bottom: 10rpx;
+  background-color: #f9f9f9;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.event-date {
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 5rpx;
+}
+
+.days-left {
+  font-size: 28rpx;
+  color: #E96354;
+  font-weight: bold;
+}

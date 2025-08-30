@@ -210,12 +210,14 @@
   border-radius: 50%;
 }
 
-/* Create Button */
-.create-button-container {
+/* Buttons */
+.buttons-container {
   position: fixed;
   bottom: 80rpx;
   right: 42rpx;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 .create-button {
@@ -228,6 +230,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 12rpx 30rpx rgba(108, 117, 125, 0.5), 0 4rpx 12rpx rgba(108, 117, 125, 0.3);
+  margin-bottom: 20rpx;
 }
 
 .create-button-icon {
@@ -236,6 +239,28 @@
 }
 
 .create-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 8rpx 25rpx rgba(108, 117, 125, 0.6);
+}
+
+.list-button {
+  width: 100rpx !important;
+  height: 100rpx !important;
+  border-radius: 50%;
+  background-color: #6c757d;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12rpx 30rpx rgba(108, 117, 125, 0.5), 0 4rpx 12rpx rgba(108, 117, 125, 0.3);
+}
+
+.list-button-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.list-button:active {
   transform: scale(0.95);
   box-shadow: 0 8rpx 25rpx rgba(108, 117, 125, 0.6);
 }
