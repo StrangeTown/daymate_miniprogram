@@ -65,7 +65,7 @@
 
 <!-- Fixed Create Button -->
 <view class="create-button-container">
-  <button class="create-button" bindtap="onCreateTap">
-    <text class="create-button-text">创建</text>
-  </button>
+  <view class="create-button" bindtap="onCreateTap">
+    <image class="create-button-icon" src="/assets/images/add_filled_icon.svg"></image>
+  </view>
 </view>

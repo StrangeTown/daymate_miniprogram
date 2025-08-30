@@ -213,35 +213,29 @@
 /* Create Button */
 .create-button-container {
   position: fixed;
-  bottom: 40rpx;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 80rpx;
+  right: 42rpx;
   z-index: 1000;
 }
 
 .create-button {
-  width: 180rpx !important;
-  height: 84rpx !important;
-  border-radius: 12rpx;
+  width: 100rpx !important;
+  height: 100rpx !important;
+  border-radius: 50%;
   background-color: #6c757d;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 20rpx rgba(108, 117, 125, 0.3);
+  box-shadow: 0 12rpx 30rpx rgba(108, 117, 125, 0.5), 0 4rpx 12rpx rgba(108, 117, 125, 0.3);
 }
 
-.create-button::after {
-  border: none;
-}
-
-.create-button-text {
-  color: white;
-  font-size: 28rpx;
-  font-weight: bold;
+.create-button-icon {
+  width: 32rpx;
+  height: 32rpx;
 }
 
 .create-button:active {
   transform: scale(0.95);
-  box-shadow: 0 4rpx 15rpx rgba(108, 117, 125, 0.4);
+  box-shadow: 0 8rpx 25rpx rgba(108, 117, 125, 0.6);
 }
