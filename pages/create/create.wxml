@@ -14,6 +14,21 @@
       />
     </view>
 
+    <view wx:if="{{letters.length > 0}}" class="letters-section">
+      <text class="input-label">选择缩写</text>
+      <view class="letters-list">
+        <text
+          wx:for="{{letters}}"
+          wx:key="index"
+          class="letter-item {{selectedLetter === item ? 'selected' : ''}}"
+          bindtap="onLetterSelect"
+          data-letter="{{item}}"
+        >
+          {{item}}
+        </text>
+      </view>
+    </view>
+
     <view class="input-group">
       <text class="input-label">活动日期</text>
       <picker

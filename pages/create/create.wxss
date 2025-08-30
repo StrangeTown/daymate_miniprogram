@@ -22,6 +22,42 @@
   margin-bottom: 0;
 }
 
+.letters-section {
+  margin-bottom: 40rpx;
+}
+
+.letters-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.letter-item {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid #e9ecef;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.letter-item.selected {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: white;
+}
+
+.letter-item:active {
+  transform: scale(0.95);
+}
+
 .input-label {
   display: block;
   font-size: 28rpx;

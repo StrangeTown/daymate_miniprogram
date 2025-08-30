@@ -7,7 +7,9 @@ Page({
   data: {
     eventTitle: '',
     eventDate: '',
-    minDate: ''
+    minDate: '',
+    letters: [],
+    selectedLetter: ''
   },
 
   /**
@@ -31,8 +33,11 @@ Page({
    * Handle title input
    */
   onTitleInput(e) {
+    const title = e.detail.value;
     this.setData({
-      eventTitle: e.detail.value
+      eventTitle: title,
+      letters: title.split('').filter(char => char.trim() !== ''), // Split into characters, remove spaces
+      selectedLetter: '' // Reset selection when title changes
     });
   },
 
@@ -42,6 +47,16 @@ Page({
   onDateChange(e) {
     this.setData({
       eventDate: e.detail.value
+    });
+  },
+
+  /**
+   * Handle letter selection
+   */
+  onLetterSelect(e) {
+    const letter = e.currentTarget.dataset.letter;
+    this.setData({
+      selectedLetter: letter
     });
   },
 
@@ -83,7 +98,8 @@ Page({
     const newEvent = {
       title: eventTitle.trim(),
       emoji: '📅', // Default emoji for new events
-      date: eventDate
+      date: eventDate,
+      abbr: this.data.selectedLetter || eventTitle.trim().charAt(0) // Use selected letter or first character as default
     };
 
     app.globalData.mockData.push(newEvent);

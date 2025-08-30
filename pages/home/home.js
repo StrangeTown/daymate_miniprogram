@@ -161,7 +161,7 @@ Page({
 			for (let day = startDate; day <= endDate; day++) {
 				const isToday = day === today.getDate();
 				const eventObj = this.getEventObjectForDate(year, month, day);
-				const eventLetter = eventObj ? eventObj.title.charAt(0) : null;
+				const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
 
 				days.push({
 					day: day,
@@ -191,7 +191,7 @@ Page({
 			// Add days of the month
 			for (let day = 1; day <= daysInMonth; day++) {
 				const eventObj = this.getEventObjectForDate(year, month, day);
-				const eventLetter = eventObj ? eventObj.title.charAt(0) : null;
+				const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
 
 				days.push({
 					day: day,
