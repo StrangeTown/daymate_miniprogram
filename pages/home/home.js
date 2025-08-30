@@ -247,6 +247,17 @@ Page({
 	},
 
 	/**
+	 * Handle create button tap
+	 */
+	onCreateTap() {
+		console.log('Create button tapped');
+		// Navigate to create page
+		wx.navigateTo({
+			url: '/pages/create/create'
+		});
+	},
+
+	/**
 	 * Handle list button tap
 	 */
 	onListTap() {
