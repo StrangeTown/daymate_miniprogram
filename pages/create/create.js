@@ -72,6 +72,11 @@ Page({
    * Handle letter selection
    */
   onLetterSelect(e) {
+    // Add short vibration for feedback
+    wx.vibrateShort({
+      type: 'light'
+    });
+
     const letter = e.currentTarget.dataset.letter;
     this.setData({
       selectedLetter: letter
@@ -82,6 +87,11 @@ Page({
    * Handle image selection
    */
   onImageSelect(e) {
+    // Add short vibration for feedback
+    wx.vibrateShort({
+      type: 'light'
+    });
+
     const image = e.currentTarget.dataset.image;
     this.setData({
       selectedImage: image

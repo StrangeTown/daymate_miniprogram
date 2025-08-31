@@ -47,6 +47,8 @@
   margin-bottom: 16rpx;
   cursor: pointer;
   transition: all 0.2s;
+  text-align: center;
+  line-height: 1;
 }
 
 .letter-item.selected {

@@ -17,7 +17,7 @@
     <view wx:if="{{letters.length > 0}}" class="letters-section">
       <text class="input-label">选择缩写</text>
       <view class="letters-list">
-        <text
+        <view
           wx:for="{{letters}}"
           wx:key="index"
           class="letter-item {{selectedLetter === item ? 'selected' : ''}}"
@@ -25,7 +25,7 @@
           data-letter="{{item}}"
         >
           {{item}}
-        </text>
+        </view>
       </view>
     </view>
 
