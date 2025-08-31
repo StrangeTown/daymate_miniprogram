@@ -29,6 +29,21 @@
       </view>
     </view>
 
+    <view class="images-section">
+      <text class="input-label">选择图片 (可选)</text>
+      <view class="images-list">
+        <view
+          wx:for="{{availableImages}}"
+          wx:key="index"
+          class="image-item {{selectedImage === item ? 'selected' : ''}}"
+          bindtap="onImageSelect"
+          data-image="{{item}}"
+        >
+          <image class="event-image-preview" src="/{{item}}" mode="aspectFit"></image>
+        </view>
+      </view>
+    </view>
+
     <view class="input-group">
       <text class="input-label">活动日期</text>
       <picker

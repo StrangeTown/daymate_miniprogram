@@ -17,18 +17,7 @@ Page({
       return app.globalData.mockData;
     }
     // Fallback to local data
-    return [
-      {
-        title: '九三阅兵',
-        emoji: '🎖️',
-        date: '2025-09-03'
-      },
-      {
-        title: '苹果发布会',
-        emoji: '🍎',
-        date: '2025-09-10'
-      }
-    ];
+    return [];
   },
 
   /**

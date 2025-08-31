@@ -9,7 +9,25 @@ Page({
     eventDate: '',
     minDate: '',
     letters: [],
-    selectedLetter: ''
+    selectedLetter: '',
+    availableImages: [
+      'assets/images/event_images/apple-svgrepo-com.svg',
+      'assets/images/event_images/birthday-cake-celebration-festival-party-svgrepo-com.svg',
+      'assets/images/event_images/birthday-celebration-christmas-festival-party-2-svgrepo-com.svg',
+      'assets/images/event_images/cherry-blossom-spring-svgrepo-com.svg',
+      'assets/images/event_images/egypt.png',
+      'assets/images/event_images/fighter-jet-solid-svgrepo-com.svg',
+      'assets/images/event_images/great-wall-svgrepo-com.svg',
+      'assets/images/event_images/japan-svgrepo-com.svg',
+      'assets/images/event_images/painting-palette-hand-drawn-tool-svgrepo-com.svg',
+      'assets/images/event_images/palm-island-beach-sun-sea-svgrepo-com.svg',
+      'assets/images/event_images/ship-sea-cruise-navigation-svgrepo-com.svg',
+      'assets/images/event_images/sports-basketball-svgrepo-com.svg',
+      'assets/images/event_images/sports-football-svgrepo-com.svg',
+      'assets/images/event_images/sports-svgrepo-com.svg',
+      'assets/images/event_images/sports-tennis-svgrepo-com.svg'
+    ],
+    selectedImage: ''
   },
 
   /**
@@ -61,6 +79,16 @@ Page({
   },
 
   /**
+   * Handle image selection
+   */
+  onImageSelect(e) {
+    const image = e.currentTarget.dataset.image;
+    this.setData({
+      selectedImage: image
+    });
+  },
+
+  /**
    * Save event and navigate back
    */
   onSaveEvent() {
@@ -97,9 +125,10 @@ Page({
     // Add new event
     const newEvent = {
       title: eventTitle.trim(),
-      emoji: '📅', // Default emoji for new events
       date: eventDate,
-      abbr: this.data.selectedLetter || eventTitle.trim().charAt(0) // Use selected letter or first character as default
+      abbr: this.data.selectedLetter || eventTitle.trim().charAt(0), // Use selected letter or first character as default
+      emoji: '📅', // Default emoji for new events
+      ...(this.data.selectedImage && { image: this.data.selectedImage }) // Add image only if selected
     };
 
     app.globalData.mockData.push(newEvent);

@@ -18,15 +18,21 @@ App({
     mockData: [
       {
         title: '九三阅兵',
-        emoji: '🎖️',
         date: '2025-09-03',
-        abbr: '九'
+        abbr: '九',
+        image: 'assets/images/event_images/fighter-jet-solid-svgrepo-com.svg'
       },
       {
         title: '苹果发布会',
-        emoji: '🍎',
         date: '2025-09-10',
-        abbr: '苹'
+        abbr: '苹',
+        image: 'assets/images/event_images/apple-svgrepo-com.svg'
+      },
+      {
+        title: '绘画课体验',
+        date: '2025-09-15',
+        abbr: '绘',
+        image: 'assets/images/event_images/painting-palette-hand-drawn-tool-svgrepo-com.svg'
       }
     ]
   }

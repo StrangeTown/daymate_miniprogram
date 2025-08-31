@@ -46,7 +46,8 @@
                 data-event-title="{{day.eventObj ? day.eventObj.title : ''}}"
                 data-event-date="{{day.dateStr}}"
               >
-                <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.event || day.day}}</text>
+                <image wx:if="{{day.eventObj && day.eventObj.image}}" class="event-image" src="/{{day.eventObj.image}}" mode="aspectFit"></image>
+                <text wx:elif="{{!day.isEmpty}}" class="day-text">{{day.event || day.day}}</text>
               </view>
               <view 
                 class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
