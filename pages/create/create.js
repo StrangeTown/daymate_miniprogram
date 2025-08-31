@@ -77,7 +77,8 @@ Page({
 
     const letter = e.currentTarget.dataset.letter;
     this.setData({
-      selectedLetter: letter
+      selectedLetter: letter,
+      selectedImage: null  // Clear image selection for mutual exclusivity
     });
   },
 
@@ -92,7 +93,8 @@ Page({
 
     const image = e.currentTarget.dataset.image;
     this.setData({
-      selectedImage: image
+      selectedImage: image,
+      selectedLetter: null  // Clear letter selection for mutual exclusivity
     });
   },
 

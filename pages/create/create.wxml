@@ -14,32 +14,41 @@
       />
     </view>
 
-    <view wx:if="{{letters.length > 0}}" class="letters-section">
-      <text class="input-label">选择缩写</text>
-      <view class="letters-list">
-        <view
-          wx:for="{{letters}}"
-          wx:key="index"
-          class="letter-item {{selectedLetter === item ? 'selected' : ''}}"
-          bindtap="onLetterSelect"
-          data-letter="{{item}}"
-        >
-          {{item}}
+    <view wx:if="{{letters.length > 0}}" class="marker-section">
+      <text class="input-label">设置日历标记</text>
+      
+      <!-- Letters Part -->
+      <view class="marker-subsection">
+        <view class="letters-list">
+          <view
+            wx:for="{{letters}}"
+            wx:key="index"
+            class="letter-item {{selectedLetter === item ? 'selected' : ''}} {{selectedImage ? 'disabled' : ''}}"
+            bindtap="onLetterSelect"
+            data-letter="{{item}}"
+          >
+            {{item}}
+          </view>
         </view>
       </view>
-    </view>
 
-    <view class="images-section">
-      <text class="input-label">选择图片 (可选)</text>
-      <view class="images-list">
-        <view
-          wx:for="{{availableImages}}"
-          wx:key="index"
-          class="image-item {{selectedImage === item ? 'selected' : ''}}"
-          bindtap="onImageSelect"
-          data-image="{{item}}"
-        >
-          <image class="event-image-preview" src="/{{item}}" mode="aspectFit"></image>
+      <!-- Separator -->
+      <view class="marker-separator">
+        <text class="marker-separator-text">或</text>
+      </view>
+
+      <!-- Images Part -->
+      <view class="marker-subsection">
+        <view class="images-list">
+          <view
+            wx:for="{{availableImages}}"
+            wx:key="index"
+            class="image-item {{selectedImage === item ? 'selected' : ''}} {{selectedLetter ? 'disabled' : ''}}"
+            bindtap="onImageSelect"
+            data-image="{{item}}"
+          >
+            <image class="event-image-preview" src="/{{item}}" mode="aspectFit"></image>
+          </view>
         </view>
       </view>
     </view>

@@ -22,6 +22,39 @@
   margin-bottom: 0;
 }
 
+.marker-section {
+  margin-bottom: 40rpx;
+}
+
+.marker-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0 24rpx 0;
+  position: relative;
+}
+
+.marker-separator::before {
+  content: '';
+  flex: 1;
+  height: 1rpx;
+  background-color: #e9ecef;
+}
+
+.marker-separator-text {
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  color: #6c757d;
+  background-color: #f8f9fa;
+}
+
+.marker-separator::after {
+  content: '';
+  flex: 1;
+  height: 1rpx;
+  background-color: #e9ecef;
+}
+
 .letters-section {
   margin-bottom: 40rpx;
 }
@@ -57,6 +90,15 @@
   color: white;
 }
 
+.letter-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.letter-item.disabled:active {
+  transform: none;
+}
+
 .letter-item:active {
   transform: scale(0.95);
 }
@@ -90,6 +132,15 @@
 .image-item.selected {
   border-color: #6c757d;
   box-shadow: 0 0 8rpx rgba(108, 117, 125, 0.3);
+}
+
+.image-item.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.image-item.disabled:active {
+  transform: none;
 }
 
 .image-item:active {
