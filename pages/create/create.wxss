@@ -1,36 +1,64 @@
 /* pages/create/create.wxss */
 
 .create-container {
-  padding: 40rpx;
   min-height: 100vh;
   background-color: #f8f9fa;
 }
 
 .form-section {
-  background-color: white;
   border-radius: 20rpx;
   padding: 40rpx;
   margin-bottom: 40rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-part {
+  background-color: #fff;
+  border: 1rpx solid #e9ecef;
+  border-radius: 12rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  position: relative;
+}
+
+.section-part:last-child {
+  margin-bottom: 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #e9ecef;
+}
+
+.section-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #333;
 }
 
 .input-group {
-  margin-bottom: 40rpx;
-}
-
-.input-group:last-child {
   margin-bottom: 0;
 }
 
 .marker-section {
-  margin-bottom: 40rpx;
+  margin-bottom: 0;
+}
+
+.marker-subsection {
+  margin-bottom: 24rpx;
+}
+
+.marker-subsection:last-child {
+  margin-bottom: 0;
 }
 
 .marker-separator {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 8px 0 24rpx 0;
+  margin: 16rpx 0 24rpx 0;
   position: relative;
 }
 
@@ -62,7 +90,7 @@
 .letters-list {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 16rpx;
+  margin-top: 8rpx;
 }
 
 .letter-item {
@@ -110,7 +138,7 @@
 .images-list {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 16rpx;
+  margin-top: 8rpx;
 }
 
 .image-item {
@@ -170,6 +198,7 @@
   color: #333;
   background-color: #fff;
   box-sizing: border-box;
+  margin-top: 8rpx;
 }
 
 .input-field:focus {
@@ -188,6 +217,7 @@
   justify-content: space-between;
   background-color: #fff;
   box-sizing: border-box;
+  margin-top: 8rpx;
 }
 
 .date-text {

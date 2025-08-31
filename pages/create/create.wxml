@@ -1,21 +1,27 @@
 <!--pages/create/create.wxml-->
-<navigation-bar title="创建活动" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="创建" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 
 <view class="create-container">
   <view class="form-section">
-    <view class="input-group">
-      <text class="input-label">活动名称</text>
+    <!-- Title Section -->
+    <view class="section-part">
+      <view class="section-header">
+        <text class="section-title">名称</text>
+      </view>
       <input
         class="input-field"
         type="text"
-        placeholder="请输入活动名称"
+        placeholder="请输入名称"
         value="{{eventTitle}}"
         bindinput="onTitleInput"
       />
     </view>
 
-    <view wx:if="{{letters.length > 0}}" class="marker-section">
-      <text class="input-label">设置日历标记</text>
+    <!-- Marker Section -->
+    <view wx:if="{{letters.length > 0}}" class="section-part">
+      <view class="section-header">
+        <text class="section-title">日历标记</text>
+      </view>
       
       <!-- Letters Part -->
       <view class="marker-subsection">
@@ -53,8 +59,11 @@
       </view>
     </view>
 
-    <view class="input-group">
-      <text class="input-label">活动日期</text>
+    <!-- Date Section -->
+    <view class="section-part">
+      <view class="section-header">
+        <text class="section-title">日期</text>
+      </view>
       <picker
         mode="date"
         value="{{eventDate}}"
@@ -70,6 +79,6 @@
   </view>
 
   <view class="button-section">
-    <button class="save-button" bindtap="onSaveEvent">保存活动</button>
+    <button class="save-button" bindtap="onSaveEvent">保存</button>
   </view>
 </view>
