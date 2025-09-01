@@ -1,5 +1,5 @@
 <!--pages/home/home.wxml-->
-<navigation-bar title="Home" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 
 <!-- Fixed Top Countdown -->
 <view class="countdown-container" bindtap="onCountdownTap">

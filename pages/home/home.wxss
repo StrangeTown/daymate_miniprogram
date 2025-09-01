@@ -171,13 +171,13 @@
 
 .day-circle.today.has-event {
   position: relative;
-  background-color: #E96354;
+  background-color: #ffe5e0;
 }
 
 .day-circle.today.has-event::after {
   content: '';
   position: absolute;
-  bottom: 8rpx;
+  bottom: 2rpx;
   left: 50%;
   transform: translateX(-50%);
   width: 8rpx;
