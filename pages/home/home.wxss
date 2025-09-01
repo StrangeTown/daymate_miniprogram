@@ -288,36 +288,49 @@
 
 .modal-content {
   background-color: white;
-  border-radius: 20rpx;
-  width: 80%;
-  max-width: 600rpx;
+  border-radius: 24rpx;
+  width: 85%;
+  max-width: 650rpx;
+  min-height: 400rpx;
   box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 30rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.modal-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
+  padding: 24rpx 30rpx 0;
 }
 
 .modal-close {
   font-size: 36rpx;
   color: #999;
   cursor: pointer;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f5f5f5;
 }
 
 .modal-body {
-  padding: 40rpx 30rpx;
+  padding: 20rpx 40rpx 60rpx;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 320rpx;
+}
+
+.countdown-main {
+  margin-bottom: 40rpx;
+}
+
+.countdown-description {
+  margin-top: 20rpx;
 }
 
 .countdown-display {

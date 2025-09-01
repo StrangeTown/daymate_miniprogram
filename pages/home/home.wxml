@@ -79,22 +79,25 @@
 <view wx:if="{{showModal}}" class="modal-overlay" bindtap="onModalClose">
   <view class="modal-content" catchtap>
     <view class="modal-header">
-      <text class="modal-title">活动倒计时</text>
       <text class="modal-close" bindtap="onModalClose">✕</text>
     </view>
     <view class="modal-body">
-      <view wx:if="{{!isTodayEvent}}" class="countdown-display">
-        <text class="countdown-number">{{countdownDays}}</text>
-        <text class="countdown-unit">天</text>
+      <view class="countdown-main">
+        <view wx:if="{{!isTodayEvent}}" class="countdown-display">
+          <text class="countdown-number">{{countdownDays}}</text>
+          <text class="countdown-unit">天</text>
+        </view>
+        <view wx:if="{{isTodayEvent}}" class="countdown-display today-display">
+          <text class="countdown-today-icon">🎉</text>
+          <text class="countdown-today-text">今天</text>
+        </view>
       </view>
-      <view wx:if="{{isTodayEvent}}" class="countdown-display today-display">
-        <text class="countdown-today-icon">🎉</text>
-        <text class="countdown-today-text">今天</text>
+      <view class="countdown-description">
+        <text class="countdown-event">
+          <text wx:if="{{isTodayEvent}}">{{countdownTitle}}</text>
+          <text wx:else>距离 {{countdownTitle}} 还有</text>
+        </text>
       </view>
-      <text class="countdown-event">
-        <text wx:if="{{isTodayEvent}}">{{countdownTitle}}</text>
-        <text wx:else>距离 {{countdownTitle}} 还有</text>
-      </text>
     </view>
   </view>
 </view>
