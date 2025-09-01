@@ -1,5 +1,5 @@
 <!--pages/list/list.wxml-->
-<navigation-bar title="List" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="列表" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 
 <view class="list-container">
   <view wx:for="{{events}}" wx:key="index" class="event-item">
@@ -7,6 +7,6 @@
       <text class="event-title">{{item.title}}</text>
       <text class="event-date">{{item.date}}</text>
     </view>
-    <text class="days-left">还有{{item.daysLeft}}天</text>
+    <text class="days-left {{item.daysLeft < 7 ? 'days-left-urgent' : 'days-left-normal'}}">还有{{item.daysLeft}}天</text>
   </view>
 </view>

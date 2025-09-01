@@ -36,10 +36,18 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad(options) {
-    const events = this.getMockData().map(event => ({
-      ...event,
-      daysLeft: this.calculateDaysLeft(event.date)
-    }));
+    const events = this.getMockData()
+      .map(event => ({
+        ...event,
+        daysLeft: this.calculateDaysLeft(event.date)
+      }))
+      .sort((a, b) => {
+        // Sort by date: most recent (closest to today) first
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateA - dateB;
+      });
+    
     this.setData({
       events: events
     });
