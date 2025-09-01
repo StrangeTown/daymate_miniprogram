@@ -31,7 +31,7 @@ Page({
       'assets/images/event_images/edit_pen_pencil_write_writing_icon.svg',
       'assets/images/event_images/egypt.png',
       'assets/images/event_images/fighter-jet-solid-svgrepo-com.svg',
-      'assets/images/event_images/graduate-cap-svgrepo-com.svg',
+      'assets/images/event_images/2125342_education_graduation_hat_learn_school_icon.svg',
       'assets/images/event_images/japan-svgrepo-com.svg',
       'assets/images/event_images/movies_music_videos_icon.svg',
       'assets/images/event_images/new_year_balloons_celebration_decoration_icon.svg',
@@ -44,6 +44,8 @@ Page({
       'assets/images/event_images/sports-tennis-svgrepo-com.svg',
       'assets/images/event_images/ticket_light_icon.svg',
       'assets/images/event_images/valentines_rose_heart_love_lover_icon.svg',
+      'assets/images/event_images/2125344_education_learn_school_student_study_icon.svg',
+      'assets/images/event_images/2125352_book_education_learn_school_study_icon.svg',
     ],
     selectedImage: ''
   },

@@ -30,7 +30,7 @@ App({
       },
       {
         title: '王总请电影',
-        date: '2025-09-05',
+        date: '2025-09-26',
         abbr: '王',
         image: 'assets/images/event_images/movies_music_videos_icon.svg'
       },
@@ -39,6 +39,12 @@ App({
         date: '2025-09-01',
         abbr: '罗',
         image: 'assets/images/event_images/podcast-svgrepo-com.svg'
+      },
+      {
+        title: '上园',
+        date: '2025-09-04',
+        abbr: '上',
+        image: 'assets/images/event_images/2125344_education_learn_school_student_study_icon.svg'
       }
     ]
   }
