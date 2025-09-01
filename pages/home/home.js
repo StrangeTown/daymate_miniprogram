@@ -56,8 +56,7 @@ Page({
 			
 			let displayText, displayDays;
 			if (nextEvent.daysUntil === 0) {
-				// Event is today
-				displayText = `${nextEvent.title} 就在今天`;
+				displayText = nextEvent.title;
 				displayDays = 0;
 			} else {
 				// Event is in the future
@@ -345,7 +344,7 @@ Page({
 		let displayText, displayDays, isToday;
 		if (daysUntil === 0) {
 			// Event is today
-			displayText = `${title} 就在今天`;
+			displayText = title;
 			displayDays = 0;
 			isToday = true;
 		} else {

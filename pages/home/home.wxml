@@ -4,7 +4,7 @@
 <!-- Fixed Top Countdown -->
 <view class="countdown-container" bindtap="onCountdownTap">
   <text class="countdown-text">
-    <text wx:if="{{isTodayEvent}}">{{countdownTitle}}</text>
+    <text wx:if="{{isTodayEvent}}">{{countdownTitle}} 就在今天</text>
     <text wx:else>距离&nbsp;<text class="countdown-title">{{countdownTitle}}</text>&nbsp;还有<text class="countdown-days">{{countdownDays}}</text>天</text>
   </text>
 </view>
@@ -94,8 +94,8 @@
       </view>
       <view class="countdown-description">
         <text class="countdown-event">
-          <text wx:if="{{isTodayEvent}}">{{countdownTitle}}</text>
-          <text wx:else>距离 {{countdownTitle}} 还有</text>
+          <text wx:if="{{isTodayEvent}}"><text class="event-name">{{countdownTitle}}</text> 就在今天</text>
+          <text wx:else>距离 <text class="event-name">{{countdownTitle}}</text> 还有</text>
         </text>
       </view>
     </view>

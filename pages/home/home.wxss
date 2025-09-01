@@ -333,7 +333,7 @@
 }
 
 .countdown-main {
-  margin-bottom: 60rpx;
+  margin-top: 80rpx;
   padding: 40rpx 0;
 }
 
