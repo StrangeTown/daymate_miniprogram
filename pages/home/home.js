@@ -342,10 +342,24 @@ Page({
 			};
 		});
 
+		let displayText, displayDays, isToday;
+		if (daysUntil === 0) {
+			// Event is today
+			displayText = `${title} 就在今天`;
+			displayDays = 0;
+			isToday = true;
+		} else {
+			// Event is in the future
+			displayText = title;
+			displayDays = daysUntil >= 0 ? daysUntil : 0;
+			isToday = false;
+		}
+
 		this.setData({
 			calendars: calendars,
-			countdownDays: daysUntil >= 0 ? daysUntil : 0,
-			countdownTitle: title
+			countdownDays: displayDays,
+			countdownTitle: displayText,
+			isTodayEvent: isToday
 		});
 	},
 

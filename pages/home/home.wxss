@@ -130,11 +130,13 @@
 }
 
 .day-bar.range-start {
-  border-radius: 8rpx 0 0 8rpx;
+  border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
 }
 
 .day-bar.range-end {
-  border-radius: 0 8rpx 8rpx 0;
+  border-bottom-right-radius: 8rpx;
+  border-top-right-radius: 8rpx;
 }
 
 .day-circle {
