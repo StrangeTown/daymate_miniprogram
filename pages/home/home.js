@@ -131,36 +131,62 @@ Page({
 			const todayDayOfWeek = today.getDay(); // 0 = Sunday
 			const currentWeekStart = new Date(today);
 			currentWeekStart.setDate(today.getDate() - todayDayOfWeek);
-			
-			// Calculate how many days to show (from current week Sunday to end of month)
-			const lastDay = new Date(year, month + 1, 0);
-			const startDate = currentWeekStart.getDate();
-			const endDate = lastDay.getDate();
-			
-			// Add empty cells for days before current week starts (should be 0 since we start on Sunday)
-			const startWeekDay = 0; // Always start on Sunday
-			for (let i = 0; i < startWeekDay; i++) {
-				days.push({
-					day: "",
-					isEmpty: true,
-					isToday: false,
-				});
-			}
 
-			// Add days from current week Sunday to end of month
-			for (let day = startDate; day <= endDate; day++) {
-				const isToday = day === today.getDate();
-				const eventObj = this.getEventObjectForDate(year, month, day);
-				const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
+			// Check if the Sunday is in the current month or previous month
+			const isSundayInCurrentMonth = currentWeekStart.getMonth() === month && currentWeekStart.getFullYear() === year;
 
-				days.push({
-					day: day,
-					isEmpty: false,
-					isToday: isToday,
-					event: eventLetter,
-					eventObj: eventObj,
-					dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
-				});
+			if (isSundayInCurrentMonth) {
+				// Sunday is in current month, start from that day
+				const startDate = currentWeekStart.getDate();
+				const lastDay = new Date(year, month + 1, 0);
+				const endDate = lastDay.getDate();
+
+				// Add days from current week Sunday to end of month
+				for (let day = startDate; day <= endDate; day++) {
+					const isToday = day === today.getDate();
+					const eventObj = this.getEventObjectForDate(year, month, day);
+					const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
+
+					days.push({
+						day: day,
+						isEmpty: false,
+						isToday: isToday,
+						event: eventLetter,
+						eventObj: eventObj,
+						dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+					});
+				}
+			} else {
+				// Sunday is in previous month, show full current month with empty cells at start
+				const firstDay = new Date(year, month, 1);
+				const lastDay = new Date(year, month + 1, 0);
+				const daysInMonth = lastDay.getDate();
+				const startWeekDay = firstDay.getDay(); // 0 = Sunday
+
+				// Add empty cells for days before month starts
+				for (let i = 0; i < startWeekDay; i++) {
+					days.push({
+						day: "",
+						isEmpty: true,
+						isToday: false,
+					});
+				}
+
+				// Add days of the month
+				for (let day = 1; day <= daysInMonth; day++) {
+					const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+					const eventObj = this.getEventObjectForDate(year, month, day);
+					const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
+
+					days.push({
+						day: day,
+						isEmpty: false,
+						isToday: isToday,
+						event: eventLetter,
+						eventObj: eventObj,
+						dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+					});
+				}
 			}
 		} else {
 			// For future months, show full month
