@@ -29,10 +29,16 @@ App({
         image: 'assets/images/event_images/apple-svgrepo-com.svg'
       },
       {
-        title: '绘画课体验',
-        date: '2025-09-15',
-        abbr: '绘',
-        image: 'assets/images/event_images/painting-palette-hand-drawn-tool-svgrepo-com.svg'
+        title: '王总请电影',
+        date: '2025-09-05',
+        abbr: '王',
+        image: 'assets/images/event_images/movies_music_videos_icon.svg'
+      },
+      {
+        title: '老罗播客',
+        date: '2025-09-01',
+        abbr: '罗',
+        image: 'assets/images/event_images/podcast-svgrepo-com.svg'
       }
     ]
   }

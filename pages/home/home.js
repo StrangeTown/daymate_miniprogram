@@ -54,15 +54,28 @@ Page({
 			const nextEvent = upcomingEvents[0];
 			console.log(`Days until ${nextEvent.title}: ${nextEvent.daysUntil}`);
 			
+			let displayText, displayDays;
+			if (nextEvent.daysUntil === 0) {
+				// Event is today
+				displayText = `${nextEvent.title} 就在今天`;
+				displayDays = 0;
+			} else {
+				// Event is in the future
+				displayText = nextEvent.title;
+				displayDays = nextEvent.daysUntil;
+			}
+			
 			this.setData({
-				countdownDays: nextEvent.daysUntil,
-				countdownTitle: nextEvent.title
+				countdownDays: displayDays,
+				countdownTitle: displayText,
+				isTodayEvent: nextEvent.daysUntil === 0
 			});
 		} else {
 			// No upcoming events
 			this.setData({
 				countdownDays: 0,
-				countdownTitle: '暂无活动'
+				countdownTitle: '暂无活动',
+				isTodayEvent: false
 			});
 		}
 	},

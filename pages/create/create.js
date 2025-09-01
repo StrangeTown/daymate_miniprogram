@@ -23,7 +23,9 @@ Page({
       'assets/images/event_images/sports-basketball-svgrepo-com.svg',
       'assets/images/event_images/sports-football-svgrepo-com.svg',
       'assets/images/event_images/sports-svgrepo-com.svg',
-      'assets/images/event_images/sports-tennis-svgrepo-com.svg'
+      'assets/images/event_images/sports-tennis-svgrepo-com.svg',
+      'assets/images/event_images/podcast-svgrepo-com.svg',
+      'assets/images/event_images/movies_music_videos_icon.svg',
     ],
     selectedImage: ''
   },

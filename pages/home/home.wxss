@@ -338,8 +338,25 @@
   font-weight: 500;
 }
 
+.today-display {
+  flex-direction: column;
+  align-items: center;
+}
+
+.countdown-today-icon {
+  font-size: 80rpx;
+  margin-bottom: 10rpx;
+}
+
+.countdown-today-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #E96354;
+}
+
 .countdown-event {
   font-size: 28rpx;
   color: #666;
   margin-top: 10rpx;
+  text-align: center;
 }
