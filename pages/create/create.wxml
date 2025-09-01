@@ -45,17 +45,19 @@
 
       <!-- Images Part -->
       <view class="marker-subsection">
-        <view class="images-list">
-          <view
-            wx:for="{{availableImages}}"
-            wx:key="index"
-            class="image-item {{selectedImage === item ? 'selected' : ''}} {{selectedLetter ? 'disabled' : ''}}"
-            bindtap="onImageSelect"
-            data-image="{{item}}"
-          >
-            <image class="event-image-preview" src="/{{item}}" mode="aspectFit"></image>
+        <scroll-view class="images-scroll" scroll-y="true" enable-flex="true">
+          <view class="images-list">
+            <view
+              wx:for="{{availableImages}}"
+              wx:key="index"
+              class="image-item {{selectedImage === item ? 'selected' : ''}} {{selectedLetter ? 'disabled' : ''}}"
+              bindtap="onImageSelect"
+              data-image="{{item}}"
+            >
+              <image class="event-image-preview" src="/{{item}}" mode="aspectFit"></image>
+            </view>
           </view>
-        </view>
+        </scroll-view>
       </view>
     </view>
 
