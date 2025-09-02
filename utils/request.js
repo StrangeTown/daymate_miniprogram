@@ -12,6 +12,7 @@ function getToken() {
 function request({ url, method = "GET", data = {}, success, fail }) {
 	const requestData = method === "GET" ? {} : data; // Don't send body data for GET requests
 	
+	console.log('request', 2)
 	wx.request({
 		url: BASE_URL + url,
 		method,

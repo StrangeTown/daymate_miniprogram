@@ -7,9 +7,9 @@ Page({
 	data: {
 		calendars: [],
 		countdownDays: 0,
-		countdownTitle: '',
+		countdownTitle: "",
 		showModal: false,
-		events: [] // Store fetched events from API
+		events: [], // Store fetched events from API
 	},
 
 	/**
@@ -18,14 +18,14 @@ Page({
 	getEventsData() {
 		// First try to use API data if available
 		if (this.data.events && this.data.events.length > 0) {
-			return this.data.events.map(event => ({
+			return this.data.events.map((event) => ({
 				title: event.title,
-				date: event.eventDate.split('T')[0], // Convert ISO date to YYYY-MM-DD format
+				date: event.eventDate.split("T")[0], // Convert ISO date to YYYY-MM-DD format
 				abbr: event.title.charAt(0), // Use first character as abbreviation
 				id: event.id,
 				createdAt: event.createdAt,
 				updatedAt: event.updatedAt,
-				userId: event.userId
+				userId: event.userId,
 			}));
 		}
 
@@ -44,11 +44,11 @@ Page({
 	 */
 	fetchEvents() {
 		const today = new Date();
-		const startDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+		const startDate = today.toISOString().split("T")[0]; // Format: YYYY-MM-DD
 
 		// Calculate end date of next next month (two months from now)
 		const endDateObj = new Date(today.getFullYear(), today.getMonth() + 3, 0); // Last day of next next month
-		const endDate = endDateObj.toISOString().split('T')[0];
+		const endDate = endDateObj.toISOString().split("T")[0];
 
 		fetchEventList(
 			{ startDate, endDate },
@@ -59,11 +59,11 @@ Page({
 				this.calculateCountdown();
 			},
 			(error) => {
-				console.error('Failed to fetch events:', error);
+				console.error("Failed to fetch events:", error);
 				wx.showToast({
-					title: '获取事件列表失败',
-					icon: 'none',
-					duration: 2000
+					title: "获取事件列表失败",
+					icon: "none",
+					duration: 2000,
 				});
 			}
 		);
@@ -82,25 +82,27 @@ Page({
 	calculateCountdown() {
 		const today = new Date();
 		today.setHours(0, 0, 0, 0); // Set to start of day for accurate comparison
-		
+
 		// Find all upcoming events
 		const upcomingEvents = this.getEventsData()
-			.map(event => {
+			.map((event) => {
 				const eventDate = new Date(event.date);
 				eventDate.setHours(0, 0, 0, 0);
 				return {
 					...event,
 					eventDate: eventDate,
-					daysUntil: Math.ceil((eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+					daysUntil: Math.ceil(
+						(eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+					),
 				};
 			})
-			.filter(event => event.daysUntil >= 0) // Only future events (including today)
+			.filter((event) => event.daysUntil >= 0) // Only future events (including today)
 			.sort((a, b) => a.daysUntil - b.daysUntil); // Sort by closest date first
-		
+
 		if (upcomingEvents.length > 0) {
 			const nextEvent = upcomingEvents[0];
 			console.log(`Days until ${nextEvent.title}: ${nextEvent.daysUntil}`);
-			
+
 			let displayText, displayDays;
 			if (nextEvent.daysUntil === 0) {
 				displayText = nextEvent.title;
@@ -110,18 +112,18 @@ Page({
 				displayText = nextEvent.title;
 				displayDays = nextEvent.daysUntil;
 			}
-			
+
 			this.setData({
 				countdownDays: displayDays,
 				countdownTitle: displayText,
-				isTodayEvent: nextEvent.daysUntil === 0
+				isTodayEvent: nextEvent.daysUntil === 0,
 			});
 		} else {
 			// No upcoming events
 			this.setData({
 				countdownDays: 0,
-				countdownTitle: '暂无活动',
-				isTodayEvent: false
+				countdownTitle: "暂无活动",
+				isTodayEvent: false,
 			});
 		}
 	},
@@ -130,8 +132,10 @@ Page({
 	 * Return event object for a specific date (or null)
 	 */
 	getEventObjectForDate(year, month, day) {
-		const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-		const event = this.getEventsData().find(event => event.date === dateStr);
+		const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+			day
+		).padStart(2, "0")}`;
+		const event = this.getEventsData().find((event) => event.date === dateStr);
 		return event || null;
 	},
 
@@ -192,7 +196,9 @@ Page({
 			currentWeekStart.setDate(today.getDate() - todayDayOfWeek);
 
 			// Check if the Sunday is in the current month or previous month
-			const isSundayInCurrentMonth = currentWeekStart.getMonth() === month && currentWeekStart.getFullYear() === year;
+			const isSundayInCurrentMonth =
+				currentWeekStart.getMonth() === month &&
+				currentWeekStart.getFullYear() === year;
 
 			if (isSundayInCurrentMonth) {
 				// Sunday is in current month, start from that day
@@ -204,16 +210,24 @@ Page({
 				for (let day = startDate; day <= endDate; day++) {
 					const isToday = day === today.getDate();
 					const eventObj = this.getEventObjectForDate(year, month, day);
-					const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
+					const eventLetter = eventObj
+						? eventObj.abbr
+							? eventObj.abbr.charAt(0)
+							: eventObj.title.charAt(0)
+						: null;
 
 					days.push({
 						day: day,
 						isEmpty: false,
 						isToday: isToday,
 						event: eventLetter,
-						title: eventObj ? eventObj.title : '',
-						image: eventObj ? eventObj.image || '' : '',
-						dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+						title: eventObj ? eventObj.title : "",
+						image: eventObj ? eventObj.image || "" : "",
+						dateStr: eventObj
+							? eventObj.date
+							: `${year}-${String(month + 1).padStart(2, "0")}-${String(
+									day
+							  ).padStart(2, "0")}`,
 					});
 				}
 			} else {
@@ -234,18 +248,29 @@ Page({
 
 				// Add days of the month
 				for (let day = 1; day <= daysInMonth; day++) {
-					const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+					const isToday =
+						day === today.getDate() &&
+						month === today.getMonth() &&
+						year === today.getFullYear();
 					const eventObj = this.getEventObjectForDate(year, month, day);
-					const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
+					const eventLetter = eventObj
+						? eventObj.abbr
+							? eventObj.abbr.charAt(0)
+							: eventObj.title.charAt(0)
+						: null;
 
 					days.push({
 						day: day,
 						isEmpty: false,
 						isToday: isToday,
 						event: eventLetter,
-						title: eventObj ? eventObj.title : '',
-						image: eventObj ? eventObj.image || '' : '',
-						dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+						title: eventObj ? eventObj.title : "",
+						image: eventObj ? eventObj.image || "" : "",
+						dateStr: eventObj
+							? eventObj.date
+							: `${year}-${String(month + 1).padStart(2, "0")}-${String(
+									day
+							  ).padStart(2, "0")}`,
 					});
 				}
 			}
@@ -268,16 +293,24 @@ Page({
 			// Add days of the month
 			for (let day = 1; day <= daysInMonth; day++) {
 				const eventObj = this.getEventObjectForDate(year, month, day);
-				const eventLetter = eventObj ? (eventObj.abbr ? eventObj.abbr.charAt(0) : eventObj.title.charAt(0)) : null;
+				const eventLetter = eventObj
+					? eventObj.abbr
+						? eventObj.abbr.charAt(0)
+						: eventObj.title.charAt(0)
+					: null;
 
 				days.push({
 					day: day,
 					isEmpty: false,
 					isToday: false, // Future months won't have today
 					event: eventLetter,
-					title: eventObj ? eventObj.title : '',
-					image: eventObj ? eventObj.image || '' : '',
-					dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+					title: eventObj ? eventObj.title : "",
+					image: eventObj ? eventObj.image || "" : "",
+					dateStr: eventObj
+						? eventObj.date
+						: `${year}-${String(month + 1).padStart(2, "0")}-${String(
+								day
+						  ).padStart(2, "0")}`,
 				});
 			}
 		}
@@ -310,7 +343,7 @@ Page({
 	 */
 	onCountdownTap() {
 		this.setData({
-			showModal: true
+			showModal: true,
 		});
 	},
 
@@ -319,7 +352,7 @@ Page({
 	 */
 	onModalClose() {
 		this.setData({
-			showModal: false
+			showModal: false,
 		});
 	},
 
@@ -327,10 +360,10 @@ Page({
 	 * Handle create button tap
 	 */
 	onCreateTap() {
-		console.log('Create button tapped');
+		console.log("Create button tapped");
 		// Navigate to create page
 		wx.navigateTo({
-			url: '/pages/create/create'
+			url: "/pages/create/create",
 		});
 	},
 
@@ -338,10 +371,10 @@ Page({
 	 * Handle list button tap
 	 */
 	onListTap() {
-		console.log('List button tapped');
+		console.log("List button tapped");
 		// Navigate to list page
 		wx.navigateTo({
-			url: '/pages/list/list'
+			url: "/pages/list/list",
 		});
 	},
 
@@ -351,43 +384,47 @@ Page({
 	onDayTap(e) {
 		// Expect dataset to include event-date and event-title
 		const dataset = e.currentTarget.dataset || {};
-		const title = dataset.eventTitle || '';
-		const dateStr = dataset.eventDate || '';
+		const title = dataset.eventTitle || "";
+		const dateStr = dataset.eventDate || "";
 
 		if (!title || !dateStr) return;
 
 		// Add short vibration for event tap
 		wx.vibrateShort({
-			type: 'light'
+			type: "light",
 		});
 
 		const today = new Date();
-		today.setHours(0,0,0,0);
+		today.setHours(0, 0, 0, 0);
 		const eventDate = new Date(dateStr);
-		eventDate.setHours(0,0,0,0);
-		const daysUntil = Math.ceil((eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+		eventDate.setHours(0, 0, 0, 0);
+		const daysUntil = Math.ceil(
+			(eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+		);
 
 		// Update calendars to mark in-range days
-		const calendars = this.data.calendars.map(month => {
-			const newWeeks = month.weeks.map(week => {
-				return week.map(day => {
+		const calendars = this.data.calendars.map((month) => {
+			const newWeeks = month.weeks.map((week) => {
+				return week.map((day) => {
 					if (day.isEmpty) return day;
 					const cellDate = new Date(day.dateStr);
-					cellDate.setHours(0,0,0,0);
-					const inRange = (cellDate.getTime() >= today.getTime() && cellDate.getTime() <= eventDate.getTime());
+					cellDate.setHours(0, 0, 0, 0);
+					const inRange =
+						cellDate.getTime() >= today.getTime() &&
+						cellDate.getTime() <= eventDate.getTime();
 					const isRangeStart = cellDate.getTime() === today.getTime();
 					const isRangeEnd = cellDate.getTime() === eventDate.getTime();
 					return {
 						...day,
 						inRange: !!inRange,
 						isRangeStart: !!isRangeStart,
-						isRangeEnd: !!isRangeEnd
+						isRangeEnd: !!isRangeEnd,
 					};
 				});
 			});
 			return {
 				...month,
-				weeks: newWeeks
+				weeks: newWeeks,
 			};
 		});
 
@@ -408,7 +445,7 @@ Page({
 			calendars: calendars,
 			countdownDays: displayDays,
 			countdownTitle: displayText,
-			isTodayEvent: isToday
+			isTodayEvent: isToday,
 		});
 	},
 
@@ -417,21 +454,21 @@ Page({
 	 */
 	onContainerTap(e) {
 		// Clear all range-related flags from calendar days
-		const calendars = this.data.calendars.map(month => {
-			const newWeeks = month.weeks.map(week => {
-				return week.map(day => {
+		const calendars = this.data.calendars.map((month) => {
+			const newWeeks = month.weeks.map((week) => {
+				return week.map((day) => {
 					if (day.isEmpty) return day;
 					return {
 						...day,
 						inRange: false,
 						isRangeStart: false,
-						isRangeEnd: false
+						isRangeEnd: false,
 					};
 				});
 			});
 			return {
 				...month,
-				weeks: newWeeks
+				weeks: newWeeks,
 			};
 		});
 
@@ -439,7 +476,7 @@ Page({
 		this.calculateCountdown();
 
 		this.setData({
-			calendars: calendars
+			calendars: calendars,
 		});
 	},
 
@@ -454,11 +491,8 @@ Page({
 	onShow() {
 		const app = getApp();
 		if (app.loginPromise) {
-      app.loginPromise.then(() => {
-        this.fetchEvents();
-
-        // this.generateCalendars();
-        // this.calculateCountdown();
+			app.loginPromise.then(() => {
+				this.fetchEvents();
 			});
 		}
 	},

@@ -10,6 +10,7 @@ const { request } = require('./request');
  */
 function fetchEventList({ startDate, endDate }, success, fail) {
 	const url = `/user/events/mine?startDate=${startDate}&endDate=${endDate}`;
+  console.log('fetchEventList', 1)
 
 	request({
 		url: url,
