@@ -164,16 +164,11 @@ Page({
 				console.log("Request success:", res);
 				this.setData({ isSubmitting: false });
 				if (res.data && res.data.code === 0) {
-					wx.showToast({
-						title: "创建成功",
-						icon: "success",
-						duration: 1500
-					});
-					setTimeout(() => {
-						wx.switchTab({
-							url: '/pages/home/home'
-						});
-					}, 1500);
+					wx.navigateBack(
+            {
+              delta: 1
+            }
+          );
 				} else {
 					wx.showToast({
 						title: res.data?.msg || "创建失败",
