@@ -1,4 +1,5 @@
 // pages/home/home.js
+const { fetchEventList } = require("../../utils/api");
 Page({
 	/**
 	 * Page initial data
@@ -7,19 +8,69 @@ Page({
 		calendars: [],
 		countdownDays: 0,
 		countdownTitle: '',
-		showModal: false
+		showModal: false,
+		events: [] // Store fetched events from API
 	},
 
 	/**
-	 * Get mock data from global or local fallback
+	 * Get events data from API or global fallback
 	 */
-	getMockData() {
+	getEventsData() {
+		// First try to use API data if available
+		if (this.data.events && this.data.events.length > 0) {
+			return this.data.events.map(event => ({
+				title: event.title,
+				date: event.eventDate.split('T')[0], // Convert ISO date to YYYY-MM-DD format
+				abbr: event.title.charAt(0), // Use first character as abbreviation
+				emoji: '📅', // Default emoji
+				id: event.id,
+				createdAt: event.createdAt,
+				updatedAt: event.updatedAt,
+				userId: event.userId
+			}));
+		}
+
+		// Fallback to global mock data
 		const app = getApp();
 		if (app.globalData && app.globalData.mockData) {
 			return app.globalData.mockData;
 		}
-		// Fallback to local data
+
+		// Final fallback to empty array
 		return [];
+	},
+
+	/**
+	 * Fetch events from API for current period
+	 */
+	fetchEvents() {
+		const today = new Date();
+		const startDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
+		// Calculate end date of next next month (two months from now)
+		const endDateObj = new Date(today.getFullYear(), today.getMonth() + 2, 0); // Last day of next next month
+		const endDate = endDateObj.toISOString().split('T')[0];
+
+		fetchEventList(
+			{ startDate, endDate },
+			(events) => {
+				// Success callback - store events and refresh UI
+				console.log('Fetched events:', events);
+				this.setData({ events: events });
+				// Refresh calendar and countdown with new data
+				this.generateCalendars();
+				this.calculateCountdown();
+			},
+			(error) => {
+				// Error callback - handle the error
+				console.error('Failed to fetch events:', error);
+				wx.showToast({
+					title: '获取事件列表失败',
+					icon: 'none',
+					duration: 2000
+				});
+			}
+		);
 	},
 
 	/**
@@ -37,7 +88,7 @@ Page({
 		today.setHours(0, 0, 0, 0); // Set to start of day for accurate comparison
 		
 		// Find all upcoming events
-		const upcomingEvents = this.getMockData()
+		const upcomingEvents = this.getEventsData()
 			.map(event => {
 				const eventDate = new Date(event.date);
 				eventDate.setHours(0, 0, 0, 0);
@@ -84,7 +135,7 @@ Page({
 	 */
 	getEventObjectForDate(year, month, day) {
 		const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-		const event = this.getMockData().find(event => event.date === dateStr);
+		const event = this.getEventsData().find(event => event.date === dateStr);
 		return event || null;
 	},
 
@@ -406,6 +457,14 @@ Page({
 		// This ensures updates when returning from create page
 		this.generateCalendars();
 		this.calculateCountdown();
+
+		// Check login promise and fetch events when login is complete
+		const app = getApp();
+		if (app.loginPromise) {
+			app.loginPromise.then(() => {
+				this.fetchEvents();
+			});
+		}
 	},
 
 	/**
