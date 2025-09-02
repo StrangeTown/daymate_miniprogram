@@ -2,7 +2,7 @@
 <navigation-bar title="" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 
 <!-- Fixed Top Countdown -->
-<view class="countdown-container" bindtap="onCountdownTap">
+<view wx:if="{{countdownTitle}}" class="countdown-container" bindtap="onCountdownTap">
   <text class="countdown-text">
     <text wx:if="{{isTodayEvent}}">{{countdownTitle}} 就在今天</text>
     <text wx:else>距离&nbsp;<text class="countdown-title">{{countdownTitle}}</text>&nbsp;还有<text class="countdown-days">{{countdownDays}}</text>天</text>
@@ -11,57 +11,65 @@
 
 <scroll-view scroll-y="true" class="calendar-scroll-container" bindtap="onContainerTap">
   <view class="calendar-container">
-    <block wx:for="{{calendars}}" wx:key="index">
-      <view class="calendar-month">
-        <view class="month-header">
-          <text class="month-title">{{item.monthName}} {{item.year}}</text>
-        </view>
-      
-      <view class="calendar-grid">
-        <!-- Week day headers -->
-        <view class="week-header">
-          <view class="day-header">日</view>
-          <view class="day-header">一</view>
-          <view class="day-header">二</view>
-          <view class="day-header">三</view>
-          <view class="day-header">四</view>
-          <view class="day-header">五</view>
-          <view class="day-header">六</view>
-        </view>
+    <!-- Loading animation when no calendars -->
+    <view wx:if="{{calendars.length === 0}}" class="calendar-loading-container">
+      <view class="calendar-loading-spinner"></view>
+    </view>
+    
+    <!-- Calendar content when data is loaded -->
+    <view wx:else>
+      <block wx:for="{{calendars}}" wx:key="index">
+        <view class="calendar-month">
+          <view class="month-header">
+            <text class="month-title">{{item.monthName}} {{item.year}}</text>
+          </view>
         
-        <!-- Calendar weeks -->
-        <view wx:for="{{item.weeks}}" wx:key="weekIndex" wx:for-index="weekIndex" class="week-row">
-          <view 
-            wx:for="{{item}}" 
-            wx:key="dayIndex" 
-            wx:for-index="dayIndex"
-            wx:for-item="day"
-            class="day-cell {{day.isEmpty ? 'empty' : ''}}"
-          >
-            <!-- full-width bar behind the circle (same height as circle) -->
-            <view class="day-bar {{day.inRange ? 'in-range' : ''}} {{day.event ? 'has-event' : ''}} {{day.isRangeStart ? 'range-start' : ''}} {{day.isRangeEnd ? 'range-end' : ''}}">
-              <view 
-                class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
-                wx:if="{{day.event}}"
-                catchtap="onDayTap"
-                data-event-title="{{day.title}}"
-                data-event-date="{{day.dateStr}}"
-              >
-                <image wx:if="{{day.image}}" class="event-image" src="/{{day.image}}" mode="aspectFit"></image>
-                <text wx:elif="{{!day.isEmpty}}" class="day-text">{{day.event || day.day}}</text>
-              </view>
-              <view 
-                class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
-                wx:else
-              >
-                <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.event || day.day}}</text>
+        <view class="calendar-grid">
+          <!-- Week day headers -->
+          <view class="week-header">
+            <view class="day-header">日</view>
+            <view class="day-header">一</view>
+            <view class="day-header">二</view>
+            <view class="day-header">三</view>
+            <view class="day-header">四</view>
+            <view class="day-header">五</view>
+            <view class="day-header">六</view>
+          </view>
+          
+          <!-- Calendar weeks -->
+          <view wx:for="{{item.weeks}}" wx:key="weekIndex" wx:for-index="weekIndex" class="week-row">
+            <view 
+              wx:for="{{item}}" 
+              wx:key="dayIndex" 
+              wx:for-index="dayIndex"
+              wx:for-item="day"
+              class="day-cell {{day.isEmpty ? 'empty' : ''}}"
+            >
+              <!-- full-width bar behind the circle (same height as circle) -->
+              <view class="day-bar {{day.inRange ? 'in-range' : ''}} {{day.event ? 'has-event' : ''}} {{day.isRangeStart ? 'range-start' : ''}} {{day.isRangeEnd ? 'range-end' : ''}}">
+                <view 
+                  class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
+                  wx:if="{{day.event}}"
+                  catchtap="onDayTap"
+                  data-event-title="{{day.title}}"
+                  data-event-date="{{day.dateStr}}"
+                >
+                  <image wx:if="{{day.image}}" class="event-image" src="/{{day.image}}" mode="aspectFit"></image>
+                  <text wx:elif="{{!day.isEmpty}}" class="day-text">{{day.event || day.day}}</text>
+                </view>
+                <view 
+                  class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
+                  wx:else
+                >
+                  <text class="day-text" wx:if="{{!day.isEmpty}}">{{day.event || day.day}}</text>
+                </view>
               </view>
             </view>
           </view>
         </view>
       </view>
+    </block>
     </view>
-  </block>
   </view>
 </scroll-view>
 
