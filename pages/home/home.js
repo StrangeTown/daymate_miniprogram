@@ -1,5 +1,6 @@
 // pages/home/home.js
 const { fetchEventList } = require("../../utils/api");
+const { getIconLocalAddressByName } = require("../../utils/icons");
 Page({
 	/**
 	 * Page initial data
@@ -23,6 +24,7 @@ Page({
 				date: event.eventDate.split("T")[0], // Convert ISO date to YYYY-MM-DD format
 				abbr: event.title.charAt(0), // Use first character as abbreviation
 				id: event.id,
+        image: getIconLocalAddressByName(event.icon) || "",
 				createdAt: event.createdAt,
 				updatedAt: event.updatedAt,
 				userId: event.userId,

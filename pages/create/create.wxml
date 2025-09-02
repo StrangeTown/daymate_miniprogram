@@ -50,11 +50,11 @@
             <view
               wx:for="{{availableImages}}"
               wx:key="index"
-              class="image-item {{selectedImage === item ? 'selected' : ''}} {{selectedLetter ? 'disabled' : ''}}"
+              class="image-item {{selectedImage === item.name ? 'selected' : ''}} {{selectedLetter ? 'disabled' : ''}}"
               bindtap="onImageSelect"
-              data-image="{{item}}"
+              data-image="{{item.name}}"
             >
-              <image class="event-image-preview" src="/{{item}}" mode="aspectFit"></image>
+              <image class="event-image-preview" src="/{{item.localAddress}}" mode="aspectFit"></image>
             </view>
           </view>
         </scroll-view>

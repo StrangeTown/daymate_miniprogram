@@ -1,5 +1,6 @@
 // pages/create/create.js
 const { request } = require("../../utils/request");
+const { EVENT_IMAGES } = require("../../constants/index");
 Page({
 	/**
 	 * Page initial data
@@ -11,44 +12,8 @@ Page({
 		letters: [],
 		selectedLetter: "",
 		isSubmitting: false,
-		availableImages: [
-			"assets/images/event_images/3465581_architecture_eiffel_france_landmark_paris_icon.svg",
-			"assets/images/event_images/3465582_architecture_coliseum_colosseum_gladiator_landmark_icon.svg",
-			"assets/images/event_images/3465583_beijing_china_chinese_great_landmark_icon.svg",
-			"assets/images/event_images/3465586_architecture_ben_big_clock_landmark_icon.svg",
-			"assets/images/event_images/3465589_america_landmark_liberty_new_statue_icon.svg",
-			"assets/images/event_images/3465590_architecture_italy_landmark_pisa_tourism_icon.svg",
-			"assets/images/event_images/3465591_architecture_australia_house_landmark_opera_icon.svg",
-			"assets/images/event_images/3465592_fuji_japan_landmark_landscape_mountain_icon.svg",
-			"assets/images/event_images/apple-svgrepo-com.svg",
-			"assets/images/event_images/baby_carriage_solid_icon.svg",
-			"assets/images/event_images/birthday-cake-celebration-festival-party-svgrepo-com.svg",
-			"assets/images/event_images/birthday-celebration-christmas-festival-party-2-svgrepo-com.svg",
-			"assets/images/event_images/birthday_celebration_food_party_pizza_icon.png",
-			"assets/images/event_images/building_estate_home_house_property_icon.svg",
-			"assets/images/event_images/building_hospital_icon.svg",
-			"assets/images/event_images/cherry-blossom-spring-svgrepo-com.svg",
-			"assets/images/event_images/crystal_pentagon_diamond_gemstone_jewelry_icon.svg",
-			"assets/images/event_images/edit_pen_pencil_write_writing_icon.svg",
-			"assets/images/event_images/egypt.png",
-			"assets/images/event_images/fighter-jet-solid-svgrepo-com.svg",
-			"assets/images/event_images/2125342_education_graduation_hat_learn_school_icon.svg",
-			"assets/images/event_images/japan-svgrepo-com.svg",
-			"assets/images/event_images/movies_music_videos_icon.svg",
-			"assets/images/event_images/new_year_balloons_celebration_decoration_icon.svg",
-			"assets/images/event_images/painting-palette-hand-drawn-tool-svgrepo-com.svg",
-			"assets/images/event_images/palm-island-beach-sun-sea-svgrepo-com.svg",
-			"assets/images/event_images/podcast-svgrepo-com.svg",
-			"assets/images/event_images/sports-basketball-svgrepo-com.svg",
-			"assets/images/event_images/sports-football-svgrepo-com.svg",
-			"assets/images/event_images/sports-svgrepo-com.svg",
-			"assets/images/event_images/sports-tennis-svgrepo-com.svg",
-			"assets/images/event_images/ticket_light_icon.svg",
-			"assets/images/event_images/valentines_rose_heart_love_lover_icon.svg",
-			"assets/images/event_images/2125344_education_learn_school_student_study_icon.svg",
-			"assets/images/event_images/2125352_book_education_learn_school_study_icon.svg",
-		],
-		selectedImage: "",
+		availableImages: EVENT_IMAGES,
+		selectedImage: null,
 	},
 
 	/**
@@ -114,9 +79,9 @@ Page({
 			type: "light",
 		});
 
-		const image = e.currentTarget.dataset.image;
+		const imageName = e.currentTarget.dataset.image;
 		this.setData({
-			selectedImage: image,
+			selectedImage: imageName,
 			selectedLetter: null, // Clear letter selection for mutual exclusivity
 		});
 	},
@@ -179,9 +144,14 @@ Page({
 	 * Create event via API
 	 */
 	doCreateRequest(title, eventDate) {
+		// Get icon name from EVENT_IMAGES objects
+		let icon = this.data.selectedImage || "";
+
 		const body = {
 			title: title,
 			eventDate: eventDate,
+			abbr: this.data.selectedLetter || title.charAt(0),
+			icon: icon,
 		};
 
 		console.log("Sending request with data:", body);
@@ -194,9 +164,16 @@ Page({
 				console.log("Request success:", res);
 				this.setData({ isSubmitting: false });
 				if (res.data && res.data.code === 0) {
-          wx.navigateBack({
-            delta: 1,
-          });
+					wx.showToast({
+						title: "创建成功",
+						icon: "success",
+						duration: 1500
+					});
+					setTimeout(() => {
+						wx.switchTab({
+							url: '/pages/home/home'
+						});
+					}, 1500);
 				} else {
 					wx.showToast({
 						title: res.data?.msg || "创建失败",
