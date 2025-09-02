@@ -76,37 +76,5 @@ App({
   },
   globalData: {
     userInfo: null,
-    mockData: [
-      {
-        title: '九三阅兵',
-        date: '2025-09-03',
-        abbr: '九',
-        image: 'assets/images/event_images/fighter-jet-solid-svgrepo-com.svg'
-      },
-      {
-        title: '苹果发布会',
-        date: '2025-09-10',
-        abbr: '苹',
-        image: 'assets/images/event_images/apple-svgrepo-com.svg'
-      },
-      {
-        title: '王总请电影',
-        date: '2025-09-26',
-        abbr: '王',
-        image: 'assets/images/event_images/movies_music_videos_icon.svg'
-      },
-      {
-        title: '老罗播客',
-        date: '2025-09-01',
-        abbr: '罗',
-        image: 'assets/images/event_images/podcast-svgrepo-com.svg'
-      },
-      {
-        title: '上园',
-        date: '2025-09-04',
-        abbr: '上',
-        image: 'assets/images/event_images/2125344_education_learn_school_student_study_icon.svg'
-      }
-    ]
   }
 })

@@ -46,7 +46,7 @@ Page({
         pageSize: this.data.pageSize
       },
       (data) => {
-        const newEvents = data.list
+        const newEvents = (data.list || [])
           .map(event => ({
             ...event,
             daysLeft: this.calculateDaysLeft(event.eventDate.split("T")[0]),

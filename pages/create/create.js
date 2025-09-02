@@ -97,6 +97,11 @@ Page({
 			return;
 		}
 
+    // vibrate
+    wx.vibrateShort({
+      type: "light",
+    });
+
 		// Validate inputs
 		if (!eventTitle.trim()) {
 			wx.showToast({
@@ -116,15 +121,6 @@ Page({
 			return;
 		}
 
-		// Get current app instance to access global data
-		const app = getApp();
-		if (!app.globalData) {
-			app.globalData = {};
-		}
-		if (!app.globalData.mockData) {
-			app.globalData.mockData = [];
-		}
-
 		// Add new event
 		const newEvent = {
 			title: eventTitle.trim(),
@@ -132,8 +128,6 @@ Page({
 			abbr: this.data.selectedLetter || eventTitle.trim().charAt(0), // Use selected letter or first character as default
 			...(this.data.selectedImage && { image: this.data.selectedImage }), // Add image only if selected
 		};
-
-		// app.globalData.mockData.push(newEvent);
 
 		// Set submitting state and call the API
 		this.setData({ isSubmitting: true });

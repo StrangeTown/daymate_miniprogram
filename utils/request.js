@@ -1,4 +1,4 @@
-const IS_PROD = false; // Set to true for production
+const IS_PROD = true; // Set to true for production
 
 const BASE_URL = IS_PROD
 	? "https://www.itwork.club/daymate"

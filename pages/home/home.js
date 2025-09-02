@@ -31,12 +31,6 @@ Page({
 			}));
 		}
 
-		// Fallback to global mock data
-		const app = getApp();
-		if (app.globalData && app.globalData.mockData) {
-			return app.globalData.mockData;
-		}
-
 		// Final fallback to empty array
 		return [];
 	},
