@@ -1,9 +1,20 @@
 /* pages/list/list.wxss */
 
+page {
+  height: 100%;
+  background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f4 100%);
+}
+
+.scroll-container {
+  height: 100vh;
+  background: transparent;
+}
+
 .list-container {
   padding: 24rpx;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f4 100%);
+  padding-top: 30rpx; /* Add top padding to account for navigation bar */
+  padding-bottom: 100rpx; /* Add bottom padding for better scrolling */
+  background: transparent;
 }
 
 .event-item {
@@ -64,4 +75,45 @@
 .days-left-normal {
   background: linear-gradient(135deg, #8e8e93 0%, #a8a8aa 100%);
   box-shadow: 0 4rpx 12rpx rgba(142, 142, 147, 0.3);
+}
+
+/* Loading and status indicators */
+.loading-container,
+.no-more-container,
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx 0;
+  margin-top: 20rpx;
+}
+
+.loading-text,
+.no-more-text,
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  opacity: 0.8;
+}
+
+.loading-text {
+  animation: fadeInOut 1.5s infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.empty-container {
+  margin-top: 100rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #ccc;
 }

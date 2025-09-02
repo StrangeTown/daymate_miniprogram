@@ -1,12 +1,36 @@
 <!--pages/list/list.wxml-->
 <navigation-bar title="列表" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 
-<view class="list-container">
-  <view wx:for="{{events}}" wx:key="index" class="event-item">
-    <view class="event-details">
-      <text class="event-title">{{item.title}}</text>
-      <text class="event-date">{{item.date}}</text>
+<scroll-view 
+  class="scroll-container" 
+  scroll-y="{{true}}" 
+  bindscrolltolower="onReachBottom"
+  refresher-enabled="{{true}}"
+  refresher-triggered="{{refreshing}}"
+  bindrefresherrefresh="onPullDownRefresh"
+>
+  <view class="list-container">
+    <view wx:for="{{events}}" wx:key="id" class="event-item">
+      <view class="event-details">
+        <text class="event-title">{{item.title}}</text>
+        <text class="event-date">{{item.formattedDate}}</text>
+      </view>
+      <text class="days-left {{item.daysLeft < 7 ? 'days-left-urgent' : 'days-left-normal'}}">还有{{item.daysLeft}}天</text>
     </view>
-    <text class="days-left {{item.daysLeft < 7 ? 'days-left-urgent' : 'days-left-normal'}}">还有{{item.daysLeft}}天</text>
+    
+    <!-- Loading indicator -->
+    <view wx:if="{{loading}}" class="loading-container">
+      <text class="loading-text">加载中...</text>
+    </view>
+    
+    <!-- No more data indicator -->
+    <view wx:elif="{{!hasMore && events.length > 0}}" class="no-more-container">
+      <text class="no-more-text">没有更多数据了</text>
+    </view>
+    
+    <!-- Empty state -->
+    <view wx:elif="{{events.length === 0 && !loading}}" class="empty-container">
+      <text class="empty-text">暂无事件</text>
+    </view>
   </view>
-</view>
+</scroll-view>
