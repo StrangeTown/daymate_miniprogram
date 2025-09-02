@@ -1,224 +1,250 @@
 // pages/create/create.js
+const { request } = require("../../utils/request");
 Page({
+	/**
+	 * Page initial data
+	 */
+	data: {
+		eventTitle: "",
+		eventDate: "",
+		minDate: "",
+		letters: [],
+		selectedLetter: "",
+		isSubmitting: false,
+		availableImages: [
+			"assets/images/event_images/3465581_architecture_eiffel_france_landmark_paris_icon.svg",
+			"assets/images/event_images/3465582_architecture_coliseum_colosseum_gladiator_landmark_icon.svg",
+			"assets/images/event_images/3465583_beijing_china_chinese_great_landmark_icon.svg",
+			"assets/images/event_images/3465586_architecture_ben_big_clock_landmark_icon.svg",
+			"assets/images/event_images/3465589_america_landmark_liberty_new_statue_icon.svg",
+			"assets/images/event_images/3465590_architecture_italy_landmark_pisa_tourism_icon.svg",
+			"assets/images/event_images/3465591_architecture_australia_house_landmark_opera_icon.svg",
+			"assets/images/event_images/3465592_fuji_japan_landmark_landscape_mountain_icon.svg",
+			"assets/images/event_images/apple-svgrepo-com.svg",
+			"assets/images/event_images/baby_carriage_solid_icon.svg",
+			"assets/images/event_images/birthday-cake-celebration-festival-party-svgrepo-com.svg",
+			"assets/images/event_images/birthday-celebration-christmas-festival-party-2-svgrepo-com.svg",
+			"assets/images/event_images/birthday_celebration_food_party_pizza_icon.png",
+			"assets/images/event_images/building_estate_home_house_property_icon.svg",
+			"assets/images/event_images/building_hospital_icon.svg",
+			"assets/images/event_images/cherry-blossom-spring-svgrepo-com.svg",
+			"assets/images/event_images/crystal_pentagon_diamond_gemstone_jewelry_icon.svg",
+			"assets/images/event_images/edit_pen_pencil_write_writing_icon.svg",
+			"assets/images/event_images/egypt.png",
+			"assets/images/event_images/fighter-jet-solid-svgrepo-com.svg",
+			"assets/images/event_images/2125342_education_graduation_hat_learn_school_icon.svg",
+			"assets/images/event_images/japan-svgrepo-com.svg",
+			"assets/images/event_images/movies_music_videos_icon.svg",
+			"assets/images/event_images/new_year_balloons_celebration_decoration_icon.svg",
+			"assets/images/event_images/painting-palette-hand-drawn-tool-svgrepo-com.svg",
+			"assets/images/event_images/palm-island-beach-sun-sea-svgrepo-com.svg",
+			"assets/images/event_images/podcast-svgrepo-com.svg",
+			"assets/images/event_images/sports-basketball-svgrepo-com.svg",
+			"assets/images/event_images/sports-football-svgrepo-com.svg",
+			"assets/images/event_images/sports-svgrepo-com.svg",
+			"assets/images/event_images/sports-tennis-svgrepo-com.svg",
+			"assets/images/event_images/ticket_light_icon.svg",
+			"assets/images/event_images/valentines_rose_heart_love_lover_icon.svg",
+			"assets/images/event_images/2125344_education_learn_school_student_study_icon.svg",
+			"assets/images/event_images/2125352_book_education_learn_school_study_icon.svg",
+		],
+		selectedImage: "",
+	},
 
-  /**
-   * Page initial data
-   */
-  data: {
-    eventTitle: '',
-    eventDate: '',
-    minDate: '',
-    letters: [],
-    selectedLetter: '',
-    availableImages: [
-      'assets/images/event_images/3465581_architecture_eiffel_france_landmark_paris_icon.svg',
-      'assets/images/event_images/3465582_architecture_coliseum_colosseum_gladiator_landmark_icon.svg',
-      'assets/images/event_images/3465583_beijing_china_chinese_great_landmark_icon.svg',
-      'assets/images/event_images/3465586_architecture_ben_big_clock_landmark_icon.svg',
-      'assets/images/event_images/3465589_america_landmark_liberty_new_statue_icon.svg',
-      'assets/images/event_images/3465590_architecture_italy_landmark_pisa_tourism_icon.svg',
-      'assets/images/event_images/3465591_architecture_australia_house_landmark_opera_icon.svg',
-      'assets/images/event_images/3465592_fuji_japan_landmark_landscape_mountain_icon.svg',
-      'assets/images/event_images/apple-svgrepo-com.svg',
-      'assets/images/event_images/baby_carriage_solid_icon.svg',
-      'assets/images/event_images/birthday-cake-celebration-festival-party-svgrepo-com.svg',
-      'assets/images/event_images/birthday-celebration-christmas-festival-party-2-svgrepo-com.svg',
-      'assets/images/event_images/birthday_celebration_food_party_pizza_icon.png',
-      'assets/images/event_images/building_estate_home_house_property_icon.svg',
-      'assets/images/event_images/building_hospital_icon.svg',
-      'assets/images/event_images/cherry-blossom-spring-svgrepo-com.svg',
-      'assets/images/event_images/crystal_pentagon_diamond_gemstone_jewelry_icon.svg',
-      'assets/images/event_images/edit_pen_pencil_write_writing_icon.svg',
-      'assets/images/event_images/egypt.png',
-      'assets/images/event_images/fighter-jet-solid-svgrepo-com.svg',
-      'assets/images/event_images/2125342_education_graduation_hat_learn_school_icon.svg',
-      'assets/images/event_images/japan-svgrepo-com.svg',
-      'assets/images/event_images/movies_music_videos_icon.svg',
-      'assets/images/event_images/new_year_balloons_celebration_decoration_icon.svg',
-      'assets/images/event_images/painting-palette-hand-drawn-tool-svgrepo-com.svg',
-      'assets/images/event_images/palm-island-beach-sun-sea-svgrepo-com.svg',
-      'assets/images/event_images/podcast-svgrepo-com.svg',
-      'assets/images/event_images/sports-basketball-svgrepo-com.svg',
-      'assets/images/event_images/sports-football-svgrepo-com.svg',
-      'assets/images/event_images/sports-svgrepo-com.svg',
-      'assets/images/event_images/sports-tennis-svgrepo-com.svg',
-      'assets/images/event_images/ticket_light_icon.svg',
-      'assets/images/event_images/valentines_rose_heart_love_lover_icon.svg',
-      'assets/images/event_images/2125344_education_learn_school_student_study_icon.svg',
-      'assets/images/event_images/2125352_book_education_learn_school_study_icon.svg',
-    ],
-    selectedImage: ''
-  },
+	/**
+	 * Lifecycle function--Called when page load
+	 */
+	onLoad(options) {
+		// Set minimum date to today
+		const today = new Date();
+		const year = today.getFullYear();
+		const month = String(today.getMonth() + 1).padStart(2, "0");
+		const day = String(today.getDate()).padStart(2, "0");
+		const todayStr = `${year}-${month}-${day}`;
 
-  /**
-   * Lifecycle function--Called when page load
-   */
-  onLoad(options) {
-    // Set minimum date to today
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const todayStr = `${year}-${month}-${day}`;
+		this.setData({
+			minDate: todayStr,
+			eventDate: todayStr,
+		});
+	},
 
-    this.setData({
-      minDate: todayStr,
-      eventDate: todayStr
-    });
-  },
+	/**
+	 * Handle title input
+	 */
+	onTitleInput(e) {
+		const title = e.detail.value;
+		this.setData({
+			eventTitle: title,
+			letters: title.split("").filter((char) => char.trim() !== ""), // Split into characters, remove spaces
+			selectedLetter: "", // Reset selection when title changes
+		});
+	},
 
-  /**
-   * Handle title input
-   */
-  onTitleInput(e) {
-    const title = e.detail.value;
-    this.setData({
-      eventTitle: title,
-      letters: title.split('').filter(char => char.trim() !== ''), // Split into characters, remove spaces
-      selectedLetter: '' // Reset selection when title changes
-    });
-  },
+	/**
+	 * Handle date picker change
+	 */
+	onDateChange(e) {
+		this.setData({
+			eventDate: e.detail.value,
+		});
+	},
 
-  /**
-   * Handle date picker change
-   */
-  onDateChange(e) {
-    this.setData({
-      eventDate: e.detail.value
-    });
-  },
+	/**
+	 * Handle letter selection
+	 */
+	onLetterSelect(e) {
+		// Add short vibration for feedback
+		wx.vibrateShort({
+			type: "light",
+		});
 
-  /**
-   * Handle letter selection
-   */
-  onLetterSelect(e) {
-    // Add short vibration for feedback
-    wx.vibrateShort({
-      type: 'light'
-    });
+		const letter = e.currentTarget.dataset.letter;
+		this.setData({
+			selectedLetter: letter,
+			selectedImage: null, // Clear image selection for mutual exclusivity
+		});
+	},
 
-    const letter = e.currentTarget.dataset.letter;
-    this.setData({
-      selectedLetter: letter,
-      selectedImage: null  // Clear image selection for mutual exclusivity
-    });
-  },
+	/**
+	 * Handle image selection
+	 */
+	onImageSelect(e) {
+		// Add short vibration for feedback
+		wx.vibrateShort({
+			type: "light",
+		});
 
-  /**
-   * Handle image selection
-   */
-  onImageSelect(e) {
-    // Add short vibration for feedback
-    wx.vibrateShort({
-      type: 'light'
-    });
+		const image = e.currentTarget.dataset.image;
+		this.setData({
+			selectedImage: image,
+			selectedLetter: null, // Clear letter selection for mutual exclusivity
+		});
+	},
 
-    const image = e.currentTarget.dataset.image;
-    this.setData({
-      selectedImage: image,
-      selectedLetter: null  // Clear letter selection for mutual exclusivity
-    });
-  },
+	/**
+	 * Save event and navigate back
+	 */
+	onSaveEvent() {
+		const { eventTitle, eventDate, isSubmitting } = this.data;
 
-  /**
-   * Save event and navigate back
-   */
-  onSaveEvent() {
-    const { eventTitle, eventDate } = this.data;
+		// Prevent repeated clicks
+		if (isSubmitting) {
+			return;
+		}
 
-    // Validate inputs
-    if (!eventTitle.trim()) {
-      wx.showToast({
-        title: '请输入活动名称',
-        icon: 'none',
-        duration: 2000
-      });
-      return;
-    }
+		// Validate inputs
+		if (!eventTitle.trim()) {
+			wx.showToast({
+				title: "请输入活动名称",
+				icon: "none",
+				duration: 2000,
+			});
+			return;
+		}
 
-    if (!eventDate) {
-      wx.showToast({
-        title: '请选择活动日期',
-        icon: 'none',
-        duration: 2000
-      });
-      return;
-    }
+		if (!eventDate) {
+			wx.showToast({
+				title: "请选择活动日期",
+				icon: "none",
+				duration: 2000,
+			});
+			return;
+		}
 
-    // Get current app instance to access global data
-    const app = getApp();
-    if (!app.globalData) {
-      app.globalData = {};
-    }
-    if (!app.globalData.mockData) {
-      app.globalData.mockData = [];
-    }
+		// Get current app instance to access global data
+		const app = getApp();
+		if (!app.globalData) {
+			app.globalData = {};
+		}
+		if (!app.globalData.mockData) {
+			app.globalData.mockData = [];
+		}
 
-    // Add new event
-    const newEvent = {
-      title: eventTitle.trim(),
-      date: eventDate,
-      abbr: this.data.selectedLetter || eventTitle.trim().charAt(0), // Use selected letter or first character as default
-      emoji: '📅', // Default emoji for new events
-      ...(this.data.selectedImage && { image: this.data.selectedImage }) // Add image only if selected
-    };
+		// Add new event
+		const newEvent = {
+			title: eventTitle.trim(),
+			date: eventDate,
+			abbr: this.data.selectedLetter || eventTitle.trim().charAt(0), // Use selected letter or first character as default
+			...(this.data.selectedImage && { image: this.data.selectedImage }), // Add image only if selected
+		};
 
-    app.globalData.mockData.push(newEvent);
+		// app.globalData.mockData.push(newEvent);
 
-    // Navigate back after a short delay
-    setTimeout(() => {
-      wx.navigateBack({
-        delta: 1
-      });
-    }, 500);
-  },
+		// Set submitting state and call the API
+		this.setData({ isSubmitting: true });
+		this.doCreateRequest(eventTitle.trim(), eventDate);
+	},
 
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady() {
+	/**
+	 * Create event via API
+	 */
+	doCreateRequest(title, eventDate) {
+		const body = {
+			title: title,
+			eventDate: eventDate,
+		};
 
-  },
+		request({
+			url: "/user/events",
+			method: "POST",
+			data: body,
+			success: (res) => {
+				this.setData({ isSubmitting: false });
+				if (res.data.code === 0) {
+					wx.navigateBack({
+						delta: 1,
+					});
+				} else {
+					wx.showToast({
+						title: res.data.msg || "创建失败",
+						icon: "none",
+						duration: 2000,
+					});
+				}
+			},
+			fail: (err) => {
+				this.setData({ isSubmitting: false });
+				wx.showToast({
+					title: "网络错误",
+					icon: "none",
+					duration: 2000,
+				});
+			},
+		});
+	},
 
-  /**
-   * Lifecycle function--Called when page show
-   */
-  onShow() {
+	/**
+	 * Lifecycle function--Called when page is initially rendered
+	 */
+	onReady() {},
 
-  },
+	/**
+	 * Lifecycle function--Called when page show
+	 */
+	onShow() {},
 
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide() {
+	/**
+	 * Lifecycle function--Called when page hide
+	 */
+	onHide() {},
 
-  },
+	/**
+	 * Lifecycle function--Called when page unload
+	 */
+	onUnload() {},
 
-  /**
-   * Lifecycle function--Called when page unload
-   */
-  onUnload() {
+	/**
+	 * Page event handler function--Called when user drop down
+	 */
+	onPullDownRefresh() {},
 
-  },
+	/**
+	 * Called when page reach bottom
+	 */
+	onReachBottom() {},
 
-  /**
-   * Page event handler function--Called when user drop down
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage() {
-
-  }
-})
+	/**
+	 * Called when user click on the top right corner to share
+	 */
+	onShareAppMessage() {},
+});
