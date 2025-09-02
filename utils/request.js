@@ -10,17 +10,21 @@ function getToken() {
 }
 
 function request({ url, method = "GET", data = {}, success, fail }) {
+	const requestData = method === "GET" ? {} : data; // Don't send body data for GET requests
+	
 	wx.request({
 		url: BASE_URL + url,
 		method,
-		data,
+		data: requestData,
 		header: {
+			"Content-Type": method === "POST" ? "application/json" : "application/x-www-form-urlencoded",
 			Authorization: getToken(),
 		},
 		success: (res) => {
 			if (typeof success === "function") success(res);
 		},
 		fail: (err) => {
+			console.error("Request failed:", err);
 			wx.showToast({ title: "网络错误", icon: "none" });
 			if (typeof fail === "function") fail(err);
 		},

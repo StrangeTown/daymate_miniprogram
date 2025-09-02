@@ -184,25 +184,29 @@ Page({
 			eventDate: eventDate,
 		};
 
+		console.log("Sending request with data:", body);
+
 		request({
 			url: "/user/events",
 			method: "POST",
 			data: body,
 			success: (res) => {
+				console.log("Request success:", res);
 				this.setData({ isSubmitting: false });
-				if (res.data.code === 0) {
-					wx.navigateBack({
-						delta: 1,
-					});
+				if (res.data && res.data.code === 0) {
+          wx.navigateBack({
+            delta: 1,
+          });
 				} else {
 					wx.showToast({
-						title: res.data.msg || "创建失败",
+						title: res.data?.msg || "创建失败",
 						icon: "none",
 						duration: 2000,
 					});
 				}
 			},
 			fail: (err) => {
+				console.error("Request failed:", err);
 				this.setData({ isSubmitting: false });
 				wx.showToast({
 					title: "网络错误",
