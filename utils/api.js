@@ -71,7 +71,40 @@ function fetchPagedEventList({ startDate, endDate, pageNum, pageSize }, success,
 	});
 }
 
+/**
+ * Delete an event
+ * @param {number} eventId - Event ID to delete
+ * @param {Function} success - Success callback function
+ * @param {Function} fail - Fail callback function
+ */
+function deleteEvent(eventId, success, fail) {
+	const url = `/user/events/${eventId}`;
+
+	request({
+		url: url,
+		method: 'DELETE',
+		data: {},
+		success: (res) => {
+			if (res.data.code === 0) {
+				if (typeof success === 'function') {
+					success(res.data.data); // Return the result
+				}
+			} else {
+				if (typeof fail === 'function') {
+					fail(new Error(res.data.msg || '删除事件失败'));
+				}
+			}
+		},
+		fail: (err) => {
+			if (typeof fail === 'function') {
+				fail(err);
+			}
+		}
+	});
+}
+
 module.exports = {
 	fetchEventList,
-	fetchPagedEventList
+	fetchPagedEventList,
+	deleteEvent
 };

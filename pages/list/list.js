@@ -1,5 +1,5 @@
 // pages/list/list.js
-const { fetchPagedEventList } = require("../../utils/api");
+const { fetchPagedEventList, deleteEvent } = require("../../utils/api");
 const { getIconLocalAddressByName } = require("../../utils/icons");
 Page({
 
@@ -13,7 +13,9 @@ Page({
     total: 0,
     hasMore: true,
     loading: false,
-    refreshing: false
+    refreshing: false,
+    showModal: false,
+    selectedItem: null
   },
 
   /**
@@ -182,5 +184,115 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  /**
+   * Handle item tap to show modal
+   */
+  onItemTap(e) {
+    const item = e.currentTarget.dataset.item;
+    this.setData({
+      selectedItem: item,
+      showModal: true
+    });
+  },
+
+  /**
+   * Close modal
+   */
+  onModalClose() {
+    this.setData({
+      showModal: false,
+      selectedItem: null
+    });
+  },
+
+  /**
+   * Handle copy action
+   */
+  onCopyAction() {
+    if (this.data.selectedItem && this.data.selectedItem.title) {
+      const formattedContent = `距离 ${this.data.selectedItem.title}(${this.data.selectedItem.formattedDate}) 还有${this.data.selectedItem.daysLeft}天`;
+      
+      wx.setClipboardData({
+        data: formattedContent,
+        success: () => {
+          wx.showToast({
+            title: '已复制到剪贴板',
+            icon: 'success',
+            duration: 2000
+          });
+          this.onModalClose();
+        },
+        fail: () => {
+          wx.showToast({
+            title: '复制失败',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      });
+    }
+  },
+
+  /**
+   * Handle remove action
+   */
+  onRemoveAction() {
+    const selectedItem = this.data.selectedItem;
+    if (!selectedItem) return;
+
+    wx.showModal({
+      title: '确认删除',
+      content: `确定要删除"${selectedItem.title}"吗？`,
+      confirmText: '删除',
+      cancelText: '取消',
+      confirmColor: '#E96354',
+      success: (res) => {
+        if (res.confirm) {
+          // User confirmed deletion
+          this.deleteEventById(selectedItem.id);
+        }
+        // Close modal regardless of choice
+        this.onModalClose();
+      }
+    });
+  },
+
+  /**
+   * Delete event by ID
+   */
+  deleteEventById(eventId) {
+    wx.showLoading({
+      title: '删除中...'
+    });
+
+    deleteEvent(
+      eventId,
+      (data) => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '已删除',
+          icon: 'success',
+          duration: 2000
+        });
+        
+        // Remove the item from local data
+        const updatedEvents = this.data.events.filter(event => event.id !== eventId);
+        this.setData({
+          events: updatedEvents,
+          total: this.data.total - 1
+        });
+      },
+      (error) => {
+        wx.hideLoading();
+        console.error("Failed to delete event:", error);
+        wx.showToast({
+          title: error.message || "删除失败",
+          icon: "none",
+          duration: 2000,
+        });
+      }
+    );
   }
 })

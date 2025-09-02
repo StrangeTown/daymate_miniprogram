@@ -10,7 +10,7 @@
   bindrefresherrefresh="onPullDownRefresh"
 >
   <view class="list-container">
-    <view wx:for="{{events}}" wx:key="id" class="event-item">
+    <view wx:for="{{events}}" wx:key="id" class="event-item" bindtap="onItemTap" data-item="{{item}}">
       <view class="event-details">
         <text class="event-title">{{item.title}}</text>
         <text class="event-date">{{item.formattedDate}}</text>
@@ -34,3 +34,25 @@
     </view>
   </view>
 </scroll-view>
+
+<!-- Item Action Modal -->
+<view wx:if="{{showModal}}" class="modal-overlay" bindtap="onModalClose">
+  <view class="modal-container" catchtap>
+    <view class="modal-header">
+      <view class="modal-handle"></view>
+    </view>
+    <view class="modal-content">
+      <view class="modal-title">
+        <text class="modal-title-text">距离 {{selectedItem.title}}({{selectedItem.formattedDate}}) 还有{{selectedItem.daysLeft}}天</text>
+      </view>
+      <view class="modal-actions">
+        <view class="action-item" bindtap="onCopyAction">
+          <image class="action-icon" src="/assets/images/fluent_copy_filled_icon.svg"></image>
+        </view>
+        <view class="action-item" bindtap="onRemoveAction">
+          <image class="action-icon" src="/assets/images/fluent_delete_filled_icon.svg"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
