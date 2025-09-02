@@ -322,6 +322,8 @@ Page({
 	 * Handle countdown container tap
 	 */
 	onCountdownTap() {
+    if (!this.data.countdownTitle) return;
+
 		this.setData({
 			showModal: true,
 		});
