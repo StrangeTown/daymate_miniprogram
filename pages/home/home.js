@@ -17,22 +17,16 @@ Page({
 	 * Get events data from API or global fallback
 	 */
 	getEventsData() {
-		// First try to use API data if available
-		if (this.data.events && this.data.events.length > 0) {
-			return this.data.events.map((event) => ({
-				title: event.title,
-				date: event.eventDate.split("T")[0], // Convert ISO date to YYYY-MM-DD format
-				abbr: event.title.charAt(0), // Use first character as abbreviation
-				id: event.id,
-        image: getIconLocalAddressByName(event.icon) || "",
-				createdAt: event.createdAt,
-				updatedAt: event.updatedAt,
-				userId: event.userId,
-			}));
-		}
-
-		// Final fallback to empty array
-		return [];
+    return this.data.events.map((event) => ({
+      title: event.title,
+      date: event.eventDate.split("T")[0], // Convert ISO date to YYYY-MM-DD format
+      abbr: event.abbr || event.title.charAt(0),
+      id: event.id,
+      image: getIconLocalAddressByName(event.icon) || "",
+      createdAt: event.createdAt,
+      updatedAt: event.updatedAt,
+      userId: event.userId,
+    }));
 	},
 
 	/**
@@ -86,7 +80,6 @@ Page({
 				eventDate.setHours(0, 0, 0, 0);
 				return {
 					...event,
-					eventDate: eventDate,
 					daysUntil: Math.ceil(
 						(eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
 					),
@@ -97,17 +90,8 @@ Page({
 
 		if (upcomingEvents.length > 0) {
 			const nextEvent = upcomingEvents[0];
-			console.log(`Days until ${nextEvent.title}: ${nextEvent.daysUntil}`);
-
-			let displayText, displayDays;
-			if (nextEvent.daysUntil === 0) {
-				displayText = nextEvent.title;
-				displayDays = 0;
-			} else {
-				// Event is in the future
-				displayText = nextEvent.title;
-				displayDays = nextEvent.daysUntil;
-			}
+      const displayText = nextEvent.title;
+      const displayDays = nextEvent.daysUntil;
 
 			this.setData({
 				countdownDays: displayDays,
@@ -118,7 +102,7 @@ Page({
 			// No upcoming events
 			this.setData({
 				countdownDays: 0,
-				countdownTitle: "暂无活动",
+				countdownTitle: "",
 				isTodayEvent: false,
 			});
 		}

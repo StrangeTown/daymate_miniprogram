@@ -32,6 +32,13 @@
   color: #ffffff;
 }
 
+.countdown-no-event {
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
 .calendar-scroll-container {
   height: calc(100vh - 44px - 80rpx);
   background-color: #f5f5f5;
