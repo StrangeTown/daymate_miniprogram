@@ -48,7 +48,7 @@ Page({
 		const startDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
 		// Calculate end date of next next month (two months from now)
-		const endDateObj = new Date(today.getFullYear(), today.getMonth() + 2, 0); // Last day of next next month
+		const endDateObj = new Date(today.getFullYear(), today.getMonth() + 3, 0); // Last day of next next month
 		const endDate = endDateObj.toISOString().split('T')[0];
 
 		fetchEventList(
@@ -215,7 +215,8 @@ Page({
 						isEmpty: false,
 						isToday: isToday,
 						event: eventLetter,
-						eventObj: eventObj,
+						title: eventObj ? eventObj.title : '',
+						image: eventObj ? eventObj.image || '' : '',
 						dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
 					});
 				}
@@ -246,7 +247,8 @@ Page({
 						isEmpty: false,
 						isToday: isToday,
 						event: eventLetter,
-						eventObj: eventObj,
+						title: eventObj ? eventObj.title : '',
+						image: eventObj ? eventObj.image || '' : '',
 						dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
 					});
 				}
@@ -277,7 +279,8 @@ Page({
 					isEmpty: false,
 					isToday: false, // Future months won't have today
 					event: eventLetter,
-					eventObj: eventObj,
+					title: eventObj ? eventObj.title : '',
+					image: eventObj ? eventObj.image || '' : '',
 					dateStr: eventObj ? eventObj.date : `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
 				});
 			}
@@ -455,14 +458,15 @@ Page({
 	onShow() {
 		// Refresh calendar and countdown when page becomes visible
 		// This ensures updates when returning from create page
-		this.generateCalendars();
-		this.calculateCountdown();
-
+    
 		// Check login promise and fetch events when login is complete
 		const app = getApp();
 		if (app.loginPromise) {
-			app.loginPromise.then(() => {
-				this.fetchEvents();
+      app.loginPromise.then(() => {
+        this.fetchEvents();
+
+        // this.generateCalendars();
+        // this.calculateCountdown();
 			});
 		}
 	},

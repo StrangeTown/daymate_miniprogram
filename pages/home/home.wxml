@@ -44,10 +44,10 @@
                 class="day-circle {{day.isToday ? 'today' : ''}} {{day.event ? 'has-event' : ''}} {{day.inRange ? 'in-range' : ''}}"
                 wx:if="{{day.event}}"
                 catchtap="onDayTap"
-                data-event-title="{{day.eventObj ? day.eventObj.title : ''}}"
+                data-event-title="{{day.title}}"
                 data-event-date="{{day.dateStr}}"
               >
-                <image wx:if="{{day.eventObj && day.eventObj.image}}" class="event-image" src="/{{day.eventObj.image}}" mode="aspectFit"></image>
+                <image wx:if="{{day.image}}" class="event-image" src="/{{day.image}}" mode="aspectFit"></image>
                 <text wx:elif="{{!day.isEmpty}}" class="day-text">{{day.event || day.day}}</text>
               </view>
               <view 
