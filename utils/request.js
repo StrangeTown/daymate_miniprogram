@@ -17,7 +17,6 @@ function request({ url, method = "GET", data = {}, success, fail }) {
 		method,
 		data: requestData,
 		header: {
-			"Content-Type": method === "POST" ? "application/json" : "application/x-www-form-urlencoded",
 			Authorization: getToken(),
 		},
 		success: (res) => {

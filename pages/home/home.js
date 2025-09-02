@@ -22,7 +22,6 @@ Page({
 				title: event.title,
 				date: event.eventDate.split('T')[0], // Convert ISO date to YYYY-MM-DD format
 				abbr: event.title.charAt(0), // Use first character as abbreviation
-				emoji: '📅', // Default emoji
 				id: event.id,
 				createdAt: event.createdAt,
 				updatedAt: event.updatedAt,
@@ -54,15 +53,12 @@ Page({
 		fetchEventList(
 			{ startDate, endDate },
 			(events) => {
-				// Success callback - store events and refresh UI
-				console.log('Fetched events:', events);
 				this.setData({ events: events });
-				// Refresh calendar and countdown with new data
+
 				this.generateCalendars();
 				this.calculateCountdown();
 			},
 			(error) => {
-				// Error callback - handle the error
 				console.error('Failed to fetch events:', error);
 				wx.showToast({
 					title: '获取事件列表失败',
@@ -456,10 +452,6 @@ Page({
 	 * Lifecycle function--Called when page show
 	 */
 	onShow() {
-		// Refresh calendar and countdown when page becomes visible
-		// This ensures updates when returning from create page
-    
-		// Check login promise and fetch events when login is complete
 		const app = getApp();
 		if (app.loginPromise) {
       app.loginPromise.then(() => {
