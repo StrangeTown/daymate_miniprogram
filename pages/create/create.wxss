@@ -8,7 +8,7 @@
 .form-section {
   border-radius: 20rpx;
   padding: 40rpx;
-  margin-bottom: 40rpx;
+  margin-bottom: 20rpx;
 }
 
 .section-part {
@@ -16,7 +16,7 @@
   border: 1rpx solid #e9ecef;
   border-radius: 12rpx;
   padding: 32rpx;
-  margin-bottom: 24rpx;
+  margin-bottom: 20rpx;
   position: relative;
 }
 
@@ -43,14 +43,6 @@
 }
 
 .marker-section {
-  margin-bottom: 0;
-}
-
-.marker-subsection {
-  margin-bottom: 24rpx;
-}
-
-.marker-subsection:last-child {
   margin-bottom: 0;
 }
 

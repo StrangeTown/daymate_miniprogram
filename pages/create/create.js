@@ -1,6 +1,7 @@
 // pages/create/create.js
 const { request } = require("../../utils/request");
 const { EVENT_IMAGES } = require("../../constants/index");
+
 Page({
 	/**
 	 * Page initial data
@@ -112,10 +113,10 @@ Page({
 			return;
 		}
 
-    // vibrate
-    wx.vibrateShort({
-      type: "light",
-    });
+		// vibrate
+		wx.vibrateShort({
+			type: "light",
+		});
 
 		// Validate inputs
 		if (!eventTitle.trim()) {
@@ -146,13 +147,40 @@ Page({
 
 		// Set submitting state and call the API
 		this.setData({ isSubmitting: true });
-		this.doCreateRequest(eventTitle.trim(), eventDate);
+		this.doCreateRequest(eventTitle.trim(), eventDate, () => {
+			// Success callback
+			if (this.data.enableNotification) {
+				// Request subscription message permission
+				wx.requestSubscribeMessage({
+					tmplIds: ['EAjMZbWoOXN9p4GdjDwT1kLR8lQ1ya4vkrhavLLweiE'], // Replace with actual template ID
+					success: (res) => {
+						console.log('Subscription message request result:', res);
+						// Navigate back after subscription request
+						wx.navigateBack({
+							delta: 1
+						});
+					},
+					fail: (err) => {
+						console.log('Subscription message request failed:', err);
+						// Still navigate back even if subscription fails
+						wx.navigateBack({
+							delta: 1
+						});
+					}
+				});
+			} else {
+				// No notification requested, navigate back directly
+				wx.navigateBack({
+					delta: 1
+				});
+			}
+		});
 	},
 
 	/**
 	 * Create event via API
 	 */
-	doCreateRequest(title, eventDate) {
+	doCreateRequest(title, eventDate, successCallback) {
 		// Get icon name from EVENT_IMAGES objects
 		let icon = this.data.selectedImage || "";
 
@@ -173,11 +201,10 @@ Page({
 				console.log("Request success:", res);
 				this.setData({ isSubmitting: false });
 				if (res.data && res.data.code === 0) {
-					wx.navigateBack(
-            {
-              delta: 1
-            }
-          );
+					// Call success callback if provided
+					if (typeof successCallback === "function") {
+						successCallback();
+					}
 				} else {
 					wx.showToast({
 						title: res.data?.msg || "创建失败",
