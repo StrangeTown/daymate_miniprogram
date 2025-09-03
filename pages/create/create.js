@@ -141,8 +141,8 @@ Page({
 		this.setData({ isSubmitting: true });
 
 		// Define the create and navigate callback
-		const createAndNavigate = () => {
-			this.doCreateRequest(eventTitle.trim(), eventDate, () => {
+		const createAndNavigate = (remindValue = false) => {
+			this.doCreateRequest(eventTitle.trim(), eventDate, remindValue, () => {
 				// Navigate back after successful creation
 				wx.navigateBack({
 					delta: 1,
@@ -156,21 +156,26 @@ Page({
 			wx.requestSubscribeMessage({
 				tmplIds: ["EAjMZbWoOXN9p4GdjDwT1kLR8lQ1ya4vkrhavLLweiE"],
 				success: (res) => {
-					createAndNavigate();
+					console.log("Subscription message request result:", res);
+					// Subscription successful, set remind to true
+					createAndNavigate(true);
 				},
 				fail: (err) => {
-					createAndNavigate();
+					console.log("Subscription message request failed:", err);
+					// Subscription failed, set remind to false
+					createAndNavigate(false);
 				},
 			});
 		} else {
-			createAndNavigate();
+			// No notification requested, set remind to false
+			createAndNavigate(false);
 		}
 	},
 
 	/**
 	 * Create event via API
 	 */
-	doCreateRequest(title, eventDate, successCallback) {
+	doCreateRequest(title, eventDate, remindValue, successCallback) {
 		// Get icon name from EVENT_IMAGES objects
 		let icon = this.data.selectedImage || "";
 
@@ -179,6 +184,7 @@ Page({
 			eventDate: eventDate,
 			abbr: this.data.selectedLetter || title.charAt(0),
 			icon: icon,
+			remind: remindValue, // Use the remind value based on subscription result
 		};
 
 		console.log("Sending request with data:", body);
