@@ -257,3 +257,17 @@
   transform: scale(0.98);
   box-shadow: 0 4rpx 15rpx rgba(108, 117, 125, 0.4);
 }
+
+/* Subscribe Section */
+.subscribe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.subscribe-switch {
+  transform: scale(0.8);
+}

@@ -78,6 +78,19 @@
         </view>
       </picker>
     </view>
+
+    <!-- Subscribe Section -->
+    <view class="section-part">
+      <view class="section-header subscribe-header">
+        <text class="section-title">前一天通知</text>
+        <switch
+          class="subscribe-switch"
+          checked="{{enableNotification}}"
+          bindchange="onNotificationToggle"
+          color="#E96354"
+        />
+      </view>
+    </view>
   </view>
 
   <view class="button-section">

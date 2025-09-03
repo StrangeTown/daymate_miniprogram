@@ -14,6 +14,7 @@ Page({
 		isSubmitting: false,
 		availableImages: EVENT_IMAGES,
 		selectedImage: null,
+		enableNotification: false, // Default to disabled
 	},
 
 	/**
@@ -51,6 +52,20 @@ Page({
 	onDateChange(e) {
 		this.setData({
 			eventDate: e.detail.value,
+		});
+	},
+
+	/**
+	 * Handle notification switch toggle
+	 */
+	onNotificationToggle(e) {
+		// Add short vibration for feedback
+		wx.vibrateShort({
+			type: "light",
+		});
+
+		this.setData({
+			enableNotification: e.detail.value,
 		});
 	},
 
