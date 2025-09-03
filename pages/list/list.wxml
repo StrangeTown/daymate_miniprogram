@@ -15,7 +15,7 @@
         <text class="event-title">{{item.title}}</text>
         <text class="event-date">{{item.formattedDate}}</text>
       </view>
-      <text class="days-left {{item.daysLeft < 7 ? 'days-left-urgent' : 'days-left-normal'}}">还有{{item.daysLeft}}天</text>
+      <text class="days-left {{item.daysLeft < 7 ? 'days-left-urgent' : 'days-left-normal'}}">{{item.daysLeft === 0 ? '今天' : '还有' + item.daysLeft + '天'}}</text>
     </view>
     
     <!-- Loading indicator -->

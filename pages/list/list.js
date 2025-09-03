@@ -22,11 +22,18 @@ Page({
    * Calculate days left until event
    */
   calculateDaysLeft(dateStr) {
+    // Get today's date at midnight in local timezone
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const eventDate = new Date(dateStr);
-    const diffTime = eventDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    // Parse the event date string and create date at midnight
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const eventDate = new Date(year, month - 1, day); // month is 0-indexed
+
+    // Calculate difference in days
+    const diffTime = eventDate.getTime() - todayMidnight.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
     return diffDays;
   },
 
