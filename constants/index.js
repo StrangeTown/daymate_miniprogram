@@ -1,5 +1,46 @@
 // the name of event images should be less then 16 characters
 const EVENT_IMAGES = [
+  // baby.png
+  {
+    name: 'baby',
+    localAddress: "assets/images/event_images/baby.png"
+  },
+  // basketball_game.png
+  {
+    name: 'basketball_game',
+    localAddress: "assets/images/event_images/basketball_game.png"
+  },
+  // cake.png
+  {
+    name: 'birthday_cake',
+    localAddress: "assets/images/event_images/birthday_cake.png"
+  },
+  // dog.png
+  {
+    name: 'dog',
+    localAddress: "assets/images/event_images/dog.png"
+  },
+  // fireworks.png
+  {
+    name: 'fireworks',
+    localAddress: "assets/images/event_images/fireworks.png"
+  },
+  // microphone.png
+  {
+    name: 'microphone',
+    localAddress: "assets/images/event_images/microphone.png"
+  },
+  // rank.png
+  {
+    name: 'rank',
+    localAddress: "assets/images/event_images/rank.png"
+  },
+  // wine.png
+  {
+    name: 'wine',
+    localAddress: "assets/images/event_images/wine.png"
+  },
+
   {
     name: 'turkey',
     localAddress: "assets/images/event_images/turkey.png"
@@ -49,10 +90,6 @@ const EVENT_IMAGES = [
     localAddress: "assets/images/event_images/baby_carriage_solid_icon.svg"
   },
 	{
-    name: 'birthday_cake',
-    localAddress: "assets/images/event_images/birthday-cake-celebration-festival-party-svgrepo-com.svg"
-  },
-	{
     name: 'christmas_tree',
     localAddress: "assets/images/event_images/birthday-celebration-christmas-festival-party-2-svgrepo-com.svg"
   },
@@ -66,7 +103,7 @@ const EVENT_IMAGES = [
   },
 	{
     name: 'hospital',
-    localAddress: "assets/images/event_images/building_hospital_icon.svg"
+    localAddress: "assets/images/event_images/hospital.png"
   },
 	{
     name: 'cherry_blossom',
