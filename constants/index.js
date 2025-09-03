@@ -1,5 +1,45 @@
 // the name of event images should be less then 16 characters
 const EVENT_IMAGES = [
+  // book.png
+  {
+    name: 'book',
+    localAddress: "assets/images/event_images/book.png"
+  },
+  // business.png
+  {
+    name: 'business',
+    localAddress: "assets/images/event_images/business.png"
+  },
+  // check.png
+  {
+    name: 'check',
+    localAddress: "assets/images/event_images/check.png"
+  },
+  // dove.png
+  {
+    name: 'dove',
+    localAddress: "assets/images/event_images/dove.png"
+  },
+  // gift.png
+  {
+    name: 'gift',
+    localAddress: "assets/images/event_images/gift.png"
+  },
+  // move.png
+  {
+    name: 'move',
+    localAddress: "assets/images/event_images/move.png"
+  },
+  // ski.png
+  {
+    name: 'ski',
+    localAddress: "assets/images/event_images/ski.png"
+  },
+  // travel.png
+  {
+    name: 'travel',
+    localAddress: "assets/images/event_images/travel.png"
+  },
   // baby.png
   {
     name: 'baby',
@@ -127,7 +167,7 @@ const EVENT_IMAGES = [
   },
 	{
     name: 'graduation_hat',
-    localAddress: "assets/images/event_images/2125342_education_graduation_hat_learn_school_icon.svg"
+    localAddress: "assets/images/event_images/graduation_hat.png"
   },
 	{
     name: 'japan',
@@ -180,10 +220,6 @@ const EVENT_IMAGES = [
 	{
     name: 'school',
     localAddress: "assets/images/event_images/2125344_education_learn_school_student_study_icon.svg"
-  },
-	{
-    name: 'book',
-    localAddress: "assets/images/event_images/2125352_book_education_learn_school_study_icon.svg"
   },
 ];
 
