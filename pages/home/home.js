@@ -1,7 +1,10 @@
 // pages/home/home.js
 const { fetchEventList } = require("../../utils/api");
 const { getIconLocalAddressByName } = require("../../utils/icons");
+const shareBehavior = require("../../behaviors/share");
+
 Page({
+	behaviors: [shareBehavior],
 	/**
 	 * Page initial data
 	 */
@@ -499,8 +502,4 @@ Page({
 	 */
 	onReachBottom() {},
 
-	/**
-	 * Called when user click on the top right corner to share
-	 */
-	onShareAppMessage() {},
 });

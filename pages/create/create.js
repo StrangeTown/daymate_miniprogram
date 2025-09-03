@@ -1,8 +1,10 @@
 // pages/create/create.js
 const { request } = require("../../utils/request");
 const { EVENT_IMAGES } = require("../../constants/index");
+const shareBehavior = require("../../behaviors/share");
 
 Page({
+	behaviors: [shareBehavior],
 	/**
 	 * Page initial data
 	 */
@@ -251,8 +253,4 @@ Page({
 	 */
 	onReachBottom() {},
 
-	/**
-	 * Called when user click on the top right corner to share
-	 */
-	onShareAppMessage() {},
 });
