@@ -1,6 +1,14 @@
-// constants/index.js
+// the name of event images should be less then 16 characters
 const EVENT_IMAGES = [
-	{
+  {
+    name: 'turkey',
+    localAddress: "assets/images/event_images/turkey.png"
+  },
+  {
+    name: 'shopping_cart',
+    localAddress: "assets/images/event_images/3507742_cart_ecommerce_grocery_iconoteka_shop_icon.svg"
+  },
+  {
     name: 'eiffel_tower',
     localAddress: "assets/images/event_images/3465581_architecture_eiffel_france_landmark_paris_icon.svg"
   },
@@ -98,11 +106,11 @@ const EVENT_IMAGES = [
   },
 	{
     name: 'palette',
-    localAddress: "assets/images/event_images/painting-palette-hand-drawn-tool-svgrepo-com.svg"
+    localAddress: "assets/images/event_images/palette.png"
   },
 	{
-    name: 'palm_island',
-    localAddress: "assets/images/event_images/palm-island-beach-sun-sea-svgrepo-com.svg"
+    name: 'palm',
+    localAddress: "assets/images/event_images/palm.png"
   },
 	{
     name: 'podcast',
@@ -118,7 +126,7 @@ const EVENT_IMAGES = [
   },
 	{
     name: 'badminton',
-    localAddress: "assets/images/event_images/sports-svgrepo-com.svg"
+    localAddress: "assets/images/event_images/badminton.png"
   },
 	{
     name: 'tennis',
