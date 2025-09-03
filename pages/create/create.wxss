@@ -105,9 +105,8 @@
 }
 
 .letter-item.selected {
-  border-color: #6c757d;
-  background-color: #6c757d;
-  color: white;
+  border-color: #ffe5e0;
+  background-color: #ffe5e0;
 }
 
 .letter-item.disabled {
@@ -155,8 +154,8 @@
 }
 
 .image-item.selected {
-  border-color: #6c757d;
-  box-shadow: 0 0 8rpx rgba(108, 117, 125, 0.3);
+  border-color: #cc9f95;
+  box-shadow: 0 0 8rpx #ffe5e0;
 }
 
 .image-item.disabled {

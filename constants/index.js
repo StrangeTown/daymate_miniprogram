@@ -195,11 +195,15 @@ const EVENT_IMAGES = [
   },
 	{
     name: 'basketball',
-    localAddress: "assets/images/event_images/sports-basketball-svgrepo-com.svg"
+    localAddress: "assets/images/event_images/basketball.png"
   },
 	{
     name: 'football',
-    localAddress: "assets/images/event_images/sports-football-svgrepo-com.svg"
+    localAddress: "assets/images/event_images/football.png"
+  },
+	{
+    name: 'nfl_football',
+    localAddress: "assets/images/event_images/nfl_football.png"
   },
 	{
     name: 'badminton',
@@ -207,7 +211,7 @@ const EVENT_IMAGES = [
   },
 	{
     name: 'tennis',
-    localAddress: "assets/images/event_images/sports-tennis-svgrepo-com.svg"
+    localAddress: "assets/images/event_images/tennis.png"
   },
 	{
     name: 'ticket',
