@@ -137,44 +137,34 @@ Page({
 			return;
 		}
 
-		// Add new event
-		const newEvent = {
-			title: eventTitle.trim(),
-			date: eventDate,
-			abbr: this.data.selectedLetter || eventTitle.trim().charAt(0), // Use selected letter or first character as default
-			...(this.data.selectedImage && { image: this.data.selectedImage }), // Add image only if selected
+		// Set submitting state
+		this.setData({ isSubmitting: true });
+
+		// Define the create and navigate callback
+		const createAndNavigate = () => {
+			this.doCreateRequest(eventTitle.trim(), eventDate, () => {
+				// Navigate back after successful creation
+				wx.navigateBack({
+					delta: 1,
+				});
+			});
 		};
 
-		// Set submitting state and call the API
-		this.setData({ isSubmitting: true });
-		this.doCreateRequest(eventTitle.trim(), eventDate, () => {
-			// Success callback
-			if (this.data.enableNotification) {
-				// Request subscription message permission
-				wx.requestSubscribeMessage({
-					tmplIds: ['EAjMZbWoOXN9p4GdjDwT1kLR8lQ1ya4vkrhavLLweiE'], // Replace with actual template ID
-					success: (res) => {
-						console.log('Subscription message request result:', res);
-						// Navigate back after subscription request
-						wx.navigateBack({
-							delta: 1
-						});
-					},
-					fail: (err) => {
-						console.log('Subscription message request failed:', err);
-						// Still navigate back even if subscription fails
-						wx.navigateBack({
-							delta: 1
-						});
-					}
-				});
-			} else {
-				// No notification requested, navigate back directly
-				wx.navigateBack({
-					delta: 1
-				});
-			}
-		});
+		// Check if notification is enabled
+		if (this.data.enableNotification) {
+			// Request subscription message permission first
+			wx.requestSubscribeMessage({
+				tmplIds: ["EAjMZbWoOXN9p4GdjDwT1kLR8lQ1ya4vkrhavLLweiE"],
+				success: (res) => {
+					createAndNavigate();
+				},
+				fail: (err) => {
+					createAndNavigate();
+				},
+			});
+		} else {
+			createAndNavigate();
+		}
 	},
 
 	/**
