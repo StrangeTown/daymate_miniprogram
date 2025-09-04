@@ -231,6 +231,14 @@ const EVENT_IMAGES = [
   },
 ];
 
+const DEFAULT_GIF = [
+  {
+    name: 'gif_cake',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  },
+];
+
 module.exports = {
 	EVENT_IMAGES,
+	DEFAULT_GIF,
 };

@@ -27,9 +27,8 @@
 .section-header {
   display: flex;
   align-items: center;
-  margin-bottom: 24rpx;
+  margin-bottom: 12rpx;
   padding-bottom: 16rpx;
-  border-bottom: 1rpx solid #e9ecef;
 }
 
 .section-title {
@@ -50,7 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 0 24rpx 0;
+  margin: 16rpx 0;
   position: relative;
 }
 
@@ -129,6 +128,8 @@
 .images-scroll {
   height: 240rpx;
   width: 100%;
+  margin-bottom: 16rpx;
+  position: relative;
 }
 
 .images-list {
@@ -261,4 +262,38 @@
 
 .subscribe-switch {
   transform: scale(0.8);
+}
+
+/* GIF Overlay Styles */
+.gif-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.lock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.lock-icon {
+  font-size: 48rpx;
+  margin-bottom: 16rpx;
+}
+
+.lock-tip {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.4;
+  max-width: 200rpx;
 }

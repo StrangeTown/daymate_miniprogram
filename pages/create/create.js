@@ -1,6 +1,6 @@
 // pages/create/create.js
 const { request } = require("../../utils/request");
-const { EVENT_IMAGES } = require("../../constants/index");
+const { EVENT_IMAGES, DEFAULT_GIF } = require("../../constants/index");
 const shareBehavior = require("../../behaviors/share");
 
 Page({
@@ -18,6 +18,8 @@ Page({
 		availableImages: EVENT_IMAGES,
 		selectedImage: null,
 		enableNotification: false, // Default to disabled
+		availableGifs: DEFAULT_GIF,
+		selectedGif: null,
 	},
 
 	/**
@@ -105,6 +107,23 @@ Page({
 	},
 
 	/**
+	 * Handle GIF selection
+	 */
+	onGifSelect(e) {
+		// Add short vibration for feedback
+		wx.vibrateShort({
+			type: "light",
+		});
+
+		const gifName = e.currentTarget.dataset.gif;
+		this.setData({
+			selectedGif: gifName,
+			selectedImage: null, // Clear image selection for mutual exclusivity
+			selectedLetter: null, // Clear letter selection for mutual exclusivity
+		});
+	},
+
+	/**
 	 * Save event and navigate back
 	 */
 	onSaveEvent() {
@@ -178,8 +197,8 @@ Page({
 	 * Create event via API
 	 */
 	doCreateRequest(title, eventDate, remindValue, successCallback) {
-		// Get icon name from EVENT_IMAGES objects
-		let icon = this.data.selectedImage || "";
+		// Get icon name - prioritize GIF over image
+		let icon = this.data.selectedGif || this.data.selectedImage || "";
 
 		const body = {
 			title: title,

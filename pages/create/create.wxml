@@ -39,9 +39,7 @@
       </view>
 
       <!-- Separator -->
-      <view class="marker-separator">
-        <text class="marker-separator-text">或</text>
-      </view>
+      <view class="marker-separator"></view>
 
       <!-- Images Part -->
       <view class="marker-subsection">
@@ -59,6 +57,35 @@
           </view>
         </scroll-view>
       </view>
+
+      <!-- Separator -->
+      <view class="marker-separator"></view>
+
+      <!-- GIF Part -->
+      <view class="marker-subsection">
+        <scroll-view class="images-scroll" scroll-y="true" enable-flex="true">
+          <view class="images-list">
+            <view
+              wx:for="{{availableGifs}}"
+              wx:key="index"
+              class="image-item {{selectedGif === item.name ? 'selected' : ''}} {{selectedImage || selectedLetter ? 'disabled' : ''}}"
+              bindtap="onGifSelect"
+              data-gif="{{item.name}}"
+            >
+              <image class="event-image-preview" src="/{{item.localAddress}}" mode="aspectFit"></image>
+            </view>
+          </view>
+
+          <!-- GIF Lock Overlay -->
+          <view class="gif-overlay">
+            <view class="lock-container">
+              <text class="lock-icon">🔒</text>
+              <text class="lock-tip">观看广告可以使用动态图标</text>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
     </view>
 
     <!-- Date Section -->
