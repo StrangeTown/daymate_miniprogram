@@ -5,16 +5,25 @@
   <view class="form-section">
     <!-- Title Section -->
     <view class="section-part">
-      <view class="section-header">
-        <text class="section-title">名称</text>
-      </view>
       <input
         class="input-field"
         type="text"
-        placeholder="请输入名称"
+        placeholder="请输入事件名称"
         value="{{eventTitle}}"
         bindinput="onTitleInput"
       />
+
+      <picker
+        mode="date"
+        value="{{eventDate}}"
+        start="{{minDate}}"
+        bindchange="onDateChange"
+      >
+        <view class="date-picker">
+          <text class="date-text">{{eventDate || '请选择日期'}}</text>
+          <text class="picker-icon">📅</text>
+        </view>
+      </picker>
     </view>
 
     <!-- Marker Section -->
@@ -63,47 +72,31 @@
 
       <!-- GIF Part -->
       <view class="marker-subsection">
-        <scroll-view class="images-scroll" scroll-y="true" enable-flex="true">
-          <view class="images-list">
-            <view
-              wx:for="{{availableGifs}}"
-              wx:key="index"
-              class="image-item {{selectedGif === item.name ? 'selected' : ''}} {{selectedImage || selectedLetter ? 'disabled' : ''}}"
-              bindtap="onGifSelect"
-              data-gif="{{item.name}}"
-            >
-              <image class="event-image-preview" src="/{{item.localAddress}}" mode="aspectFit"></image>
+        <view class="gif-container">
+          <scroll-view class="images-scroll gif-images-scroll" scroll-y="true" enable-flex="true">
+            <view class="images-list">
+              <view
+                wx:for="{{availableGifs}}"
+                wx:key="index"
+                class="image-item {{selectedGif === item.name ? 'selected' : ''}} {{selectedImage || selectedLetter ? 'disabled' : ''}}"
+                bindtap="onGifSelect"
+                data-gif="{{item.name}}"
+              >
+                <image class="event-image-preview" src="/{{item.localAddress}}" mode="aspectFit"></image>
+              </view>
             </view>
-          </view>
+          </scroll-view>
 
           <!-- GIF Lock Overlay -->
           <view class="gif-overlay">
             <view class="lock-container">
               <text class="lock-icon">🔒</text>
-              <text class="lock-tip">观看广告可以使用动态图标</text>
+              <view class="lock-tip">观看广告可以使用动态图标</view>
             </view>
           </view>
-        </scroll-view>
-      </view>
-
-    </view>
-
-    <!-- Date Section -->
-    <view class="section-part">
-      <view class="section-header">
-        <text class="section-title">日期</text>
-      </view>
-      <picker
-        mode="date"
-        value="{{eventDate}}"
-        start="{{minDate}}"
-        bindchange="onDateChange"
-      >
-        <view class="date-picker">
-          <text class="date-text">{{eventDate || '请选择日期'}}</text>
-          <text class="picker-icon">📅</text>
         </view>
-      </picker>
+      </view>
+
     </view>
 
     <!-- Subscribe Section -->

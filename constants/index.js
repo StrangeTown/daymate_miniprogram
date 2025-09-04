@@ -236,6 +236,34 @@ const DEFAULT_GIF = [
     name: 'gif_cake',
     localAddress: 'assets/images/event_gif/default-cake.gif'
   },
+  {
+    name: 'gif_cake2',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  },
+  {
+    name: 'gif_cake3',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  },
+  {
+    name: 'gif_cake4',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  },
+  {
+    name: 'gif_cake5',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  },
+  {
+    name: 'gif_cake6',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  },
+  {
+    name: 'gif_cake7',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  },
+  {
+    name: 'gif_cake8',
+    localAddress: 'assets/images/event_gif/default-cake.gif'
+  }
 ];
 
 module.exports = {
