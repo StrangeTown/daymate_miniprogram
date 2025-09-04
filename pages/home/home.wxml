@@ -59,7 +59,7 @@
                   data-event-title="{{day.title}}"
                   data-event-date="{{day.dateStr}}"
                 >
-                  <image wx:if="{{day.image}}" class="event-image" src="/{{day.image}}" mode="aspectFit"></image>
+                  <image wx:if="{{day.image}}" class="event-image" src="{{day.image}}" mode="aspectFit"></image>
                   <text wx:elif="{{!day.isEmpty}}" class="day-text">{{day.event || day.day}}</text>
                 </view>
                 <view 

@@ -61,7 +61,7 @@
               bindtap="onImageSelect"
               data-image="{{item.name}}"
             >
-              <image class="event-image-preview" src="/{{item.localAddress}}" mode="aspectFit"></image>
+              <image class="event-image-preview" src="{{item.url}}" mode="aspectFit"></image>
             </view>
           </view>
         </scroll-view>
@@ -77,19 +77,19 @@
             <view class="images-list">
               <view
                 wx:for="{{availableGifs}}"
-                wx:key="index"
+                wx:key="item.name"
                 class="image-item {{selectedGif === item.name ? 'selected' : ''}} {{selectedImage || selectedLetter ? 'disabled' : ''}}"
                 bindtap="onGifSelect"
                 data-gif="{{item.name}}"
               >
-                <image class="event-image-preview" src="/{{item.localAddress}}" mode="aspectFit"></image>
+                <image class="event-image-preview" src="{{item.url}}" mode="aspectFit"></image>
               </view>
             </view>
           </scroll-view>
 
           <!-- GIF Lock Overlay -->
-          <view class="gif-overlay">
-            <view class="lock-container">
+          <view wx:if="{{isGifLocked}}" class="gif-overlay">
+            <view class="lock-container" bindtap="onLockContainerTap">
               <text class="lock-icon">🔒</text>
               <view class="lock-tip">观看广告可以使用动态图标</view>
             </view>

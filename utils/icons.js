@@ -1,15 +1,15 @@
 const { EVENT_IMAGES } = require('../constants/index');
 
 /**
- * Get the local address of an icon by its name.
+ * Get the URL of an icon by its name.
  * @param {string} name - The name of the icon.
- * @returns {string|null} The local path to the icon or null if not found.
+ * @returns {string|null} The URL to the icon or null if not found.
  */
-function getIconLocalAddressByName(name) {
+function getIconUrlByName(name) {
   const icon = EVENT_IMAGES.find(img => img.name === name);
-  return icon ? icon.localAddress : null;
+  return icon ? icon.url : null;
 }
 
 module.exports = {
-  getIconLocalAddressByName
+  getIconUrlByName
 };

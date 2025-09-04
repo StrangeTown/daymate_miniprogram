@@ -1,6 +1,6 @@
 // pages/list/list.js
 const { fetchPagedEventList, deleteEvent } = require("../../utils/api");
-const { getIconLocalAddressByName } = require("../../utils/icons");
+const { getIconUrlByName } = require("../../utils/icons");
 const shareBehavior = require("../../behaviors/share");
 
 Page({
@@ -60,7 +60,7 @@ Page({
           .map(event => ({
             ...event,
             daysLeft: this.calculateDaysLeft(event.eventDate.split("T")[0]),
-            image: getIconLocalAddressByName(event.icon) || "",
+            image: getIconUrlByName(event.icon) || "",
             formattedDate: event.eventDate.split("T")[0] // Format date to YYYY-MM-DD
           }));
         

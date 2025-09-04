@@ -103,8 +103,42 @@ function deleteEvent(eventId, success, fail) {
 	});
 }
 
+/**
+ * Fetch GIF icons configuration
+ * @param {Function} success - Success callback function
+ * @param {Function} fail - Fail callback function
+ */
+function fetchGifIcons(success, fail) {
+	const url = '/admin/configs/app/gif_icons';
+
+	request({
+		url: url,
+		method: 'GET',
+		data: {},
+		success: (res) => {
+			console.log('fetchGifIcons response data:', res.data); // Log the response data
+			if (res.data.code === 0) {
+				if (typeof success === 'function') {
+					success(res.data.data); // Return the GIF icons data
+				}
+			} else {
+				if (typeof fail === 'function') {
+					fail(new Error(res.data.msg || '获取GIF图标配置失败'));
+				}
+			}
+		},
+		fail: (err) => {
+			console.error('fetchGifIcons request failed:', err); // Log the error
+			if (typeof fail === 'function') {
+				fail(err);
+			}
+		}
+	});
+}
+
 module.exports = {
 	fetchEventList,
 	fetchPagedEventList,
-	deleteEvent
+	deleteEvent,
+	fetchGifIcons
 };

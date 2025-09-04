@@ -1,6 +1,7 @@
 // pages/create/create.js
 const { request } = require("../../utils/request");
 const { EVENT_IMAGES, DEFAULT_GIF } = require("../../constants/index");
+const { fetchGifIcons } = require("../../utils/api");
 const shareBehavior = require("../../behaviors/share");
 
 Page({
@@ -20,6 +21,7 @@ Page({
 		enableNotification: false, // Default to disabled
 		availableGifs: DEFAULT_GIF,
 		selectedGif: null,
+		isGifLocked: true, // Control GIF overlay visibility
 	},
 
 	/**
@@ -121,6 +123,68 @@ Page({
 			selectedImage: null, // Clear image selection for mutual exclusivity
 			selectedLetter: null, // Clear letter selection for mutual exclusivity
 		});
+	},
+
+	/**
+	 * Handle lock container click to fetch GIF icons
+	 */
+	onLockContainerTap() {
+		// Add short vibration for feedback
+		wx.vibrateShort({
+			type: "light",
+		});
+
+		// Show loading indicator
+		wx.showLoading({
+			title: '加载中...'
+		});
+
+		// Call the API to fetch GIF icons
+		fetchGifIcons(
+			(data) => {
+				// Success callback
+				wx.hideLoading();
+				console.log('GIF icons fetched successfully:', data);
+
+				// Process the API response and update availableGifs
+				if (data && data.values) {
+					const gifData = data.values.map(gif => ({
+						name: gif.name,
+						url: gif.url
+					}));
+
+					this.setData({
+						availableGifs: gifData,
+						isGifLocked: false, // Hide the overlay
+					});
+
+					console.log('Available GIFs updated:', gifData);
+
+					wx.showToast({
+						title: 'GIF图标已解锁',
+						icon: 'success',
+						duration: 2000
+					});
+				} else {
+					console.error('Invalid API response structure:', data);
+					wx.showToast({
+						title: '数据格式错误',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+			},
+			(error) => {
+				// Error callback
+				wx.hideLoading();
+				console.error('Failed to fetch GIF icons:', error);
+				wx.showToast({
+					title: '获取GIF图标失败',
+					icon: 'none',
+					duration: 2000
+				});
+			}
+		);
 	},
 
 	/**
