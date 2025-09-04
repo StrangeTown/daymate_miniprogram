@@ -25,6 +25,11 @@ Page({
 	},
 
 	/**
+	 * Reward video ad instance
+	 */
+	videoAd: null,
+
+	/**
 	 * Lifecycle function--Called when page load
 	 */
 	onLoad(options) {
@@ -39,11 +44,136 @@ Page({
 			minDate: todayStr,
 			eventDate: todayStr,
 		});
+
+		// Initialize rewarded video ad
+		this.initRewardedVideoAd();
 	},
 
 	/**
-	 * Handle title input
+	 * Initialize rewarded video ad
 	 */
+	initRewardedVideoAd() {
+		// 若在开发者工具中无法预览广告，请切换开发者工具中的基础库版本
+		// 在页面中定义激励视频广告
+		if (wx.createRewardedVideoAd) {
+			this.videoAd = wx.createRewardedVideoAd({
+				adUnitId: 'adunit-403748566480b308'
+			});
+
+			this.videoAd.onLoad(() => {
+				console.log('Rewarded video ad loaded successfully');
+			});
+
+			this.videoAd.onError((err) => {
+				console.error('激励视频广告加载失败', err);
+			});
+
+			this.videoAd.onClose((res) => {
+				console.log('Rewarded video ad closed:', res);
+				// 用户点击了【关闭广告】按钮
+				if (res && res.isEnded) {
+					// 正常播放结束，可以下发奖励
+					console.log('User watched the ad completely, unlocking GIF icons');
+					this.unlockGifIcons();
+				} else {
+					// 播放中途退出，不下发奖励
+					console.log('User skipped the ad, no reward given');
+					wx.showToast({
+						title: '观看完整广告才能解锁',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+			});
+		} else {
+			console.warn('Rewarded video ad is not supported in this version');
+		}
+	},
+
+	/**
+	 * Show rewarded video ad
+	 */
+	showRewardedVideoAd() {
+		if (this.videoAd) {
+			this.videoAd.show().catch(() => {
+				// 失败重试
+				this.videoAd.load()
+					.then(() => this.videoAd.show())
+					.catch(err => {
+						console.error('激励视频广告显示失败', err);
+						wx.showToast({
+							title: '广告加载失败，请重试',
+							icon: 'none',
+							duration: 2000
+						});
+					});
+			});
+		} else {
+			console.error('Rewarded video ad not initialized');
+			wx.showToast({
+				title: '广告功能不可用',
+				icon: 'none',
+				duration: 2000
+			});
+		}
+	},
+
+	/**
+	 * Unlock GIF icons after successful ad watch
+	 */
+	unlockGifIcons() {
+		// Show loading indicator
+		wx.showLoading({
+			title: '解锁中...'
+		});
+
+		// Call the API to fetch GIF icons
+		fetchGifIcons(
+			(data) => {
+				// Success callback
+				wx.hideLoading();
+				console.log('GIF icons fetched successfully:', data);
+
+				// Process the API response and update availableGifs
+				if (data && data.values) {
+					const gifData = data.values.map(gif => ({
+						name: gif.name,
+						url: gif.url
+					}));
+
+					this.setData({
+						availableGifs: gifData,
+						isGifLocked: false, // Hide the overlay
+					});
+
+					console.log('Available GIFs updated:', gifData);
+
+					// wx.showToast({
+					// 	title: 'GIF图标已解锁',
+					// 	icon: 'success',
+					// 	duration: 2000
+					// });
+				} else {
+					console.error('Invalid API response structure:', data);
+					wx.showToast({
+						title: '数据格式错误',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+			},
+			(error) => {
+				// Error callback
+				wx.hideLoading();
+				console.error('Failed to fetch GIF icons:', error);
+				wx.showToast({
+					title: '获取GIF图标失败',
+					icon: 'none',
+					duration: 2000
+				});
+			}
+		);
+	},
 	onTitleInput(e) {
 		const title = e.detail.value;
 		this.setData({
@@ -126,7 +256,7 @@ Page({
 	},
 
 	/**
-	 * Handle lock container click to fetch GIF icons
+	 * Handle lock container click to show rewarded video ad
 	 */
 	onLockContainerTap() {
 		// Add short vibration for feedback
@@ -134,57 +264,8 @@ Page({
 			type: "light",
 		});
 
-		// Show loading indicator
-		wx.showLoading({
-			title: '加载中...'
-		});
-
-		// Call the API to fetch GIF icons
-		fetchGifIcons(
-			(data) => {
-				// Success callback
-				wx.hideLoading();
-				console.log('GIF icons fetched successfully:', data);
-
-				// Process the API response and update availableGifs
-				if (data && data.values) {
-					const gifData = data.values.map(gif => ({
-						name: gif.name,
-						url: gif.url
-					}));
-
-					this.setData({
-						availableGifs: gifData,
-						isGifLocked: false, // Hide the overlay
-					});
-
-					console.log('Available GIFs updated:', gifData);
-
-					wx.showToast({
-						title: 'GIF图标已解锁',
-						icon: 'success',
-						duration: 2000
-					});
-				} else {
-					console.error('Invalid API response structure:', data);
-					wx.showToast({
-						title: '数据格式错误',
-						icon: 'none',
-						duration: 2000
-					});
-				}
-			},
-			(error) => {
-				// Error callback
-				wx.hideLoading();
-				console.error('Failed to fetch GIF icons:', error);
-				wx.showToast({
-					title: '获取GIF图标失败',
-					icon: 'none',
-					duration: 2000
-				});
-			}
-		);
+		// Show rewarded video ad instead of directly fetching GIFs
+		this.showRewardedVideoAd();
 	},
 
 	/**
