@@ -5,14 +5,6 @@
   <view class="form-section">
     <!-- Title Section -->
     <view class="section-part">
-      <input
-        class="input-field"
-        type="text"
-        placeholder="请输入事件名称"
-        value="{{eventTitle}}"
-        bindinput="onTitleInput"
-      />
-
       <picker
         mode="date"
         value="{{eventDate}}"
@@ -24,6 +16,14 @@
           <text class="picker-icon">📅</text>
         </view>
       </picker>
+
+      <input
+        class="input-field"
+        type="text"
+        placeholder="请输入事件名称"
+        value="{{eventTitle}}"
+        bindinput="onTitleInput"
+      />
     </view>
 
     <!-- Marker Section -->
@@ -78,7 +78,7 @@
               <view
                 wx:for="{{availableGifs}}"
                 wx:key="item.name"
-                class="image-item {{selectedGif === item.name ? 'selected' : ''}} {{selectedImage || selectedLetter ? 'disabled' : ''}}"
+                class="image-item {{selectedGif === item.url ? 'selected' : ''}} {{selectedImage || selectedLetter ? 'disabled' : ''}}"
                 bindtap="onGifSelect"
                 data-gif="{{item.name}}"
               >
@@ -115,5 +115,23 @@
 
   <view class="button-section">
     <button class="save-button" bindtap="onSaveEvent">保存</button>
+  </view>
+</view>
+
+<!-- Custom Success Modal -->
+<view wx:if="{{showSuccessModal}}" class="custom-modal-overlay" bindtap="hideSuccessModal">
+  <view class="custom-modal" bindtap="">
+    <view class="modal-header">
+      <text class="modal-title">解锁成功</text>
+    </view>
+    <view class="modal-content">
+      <view class="modal-message-container">
+        <text class="modal-message">动画图标已解锁，</text>
+        <text class="modal-message">可在未来 24 小时内无限使用</text>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-confirm-btn" bindtap="hideSuccessModal">好的</button>
+    </view>
   </view>
 </view>

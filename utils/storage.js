@@ -82,9 +82,95 @@ function setUserInfoAndToken(userInfo, token) {
   }
 }
 
+/**
+ * Set GIF icons with expiration time (24 hours from now)
+ * @param {Array} gifData - Array of GIF icon objects
+ * @returns {boolean} true on success, false on failure
+ */
+function setGifIconsWithExpiration(gifData) {
+  if (!Array.isArray(gifData)) return false;
+  try {
+    const expirationTime = Date.now() + (24 * 60 * 60 * 1000); // 24 hours from now
+    const gifCache = {
+      data: gifData,
+      expiration: expirationTime
+    };
+    wx.setStorageSync('gifIcons', gifCache);
+    console.log('GIF icons saved with expiration:', new Date(expirationTime));
+    return true;
+  } catch (err) {
+    console.error('Error setting GIF icons in storage:', err);
+    return false;
+  }
+}
+
+/**
+ * Get GIF icons if they're still available (not expired)
+ * @returns {Array|null} Array of GIF icons or null if expired/not found
+ */
+function getGifIcons() {
+  try {
+    const gifCache = wx.getStorageSync('gifIcons');
+    if (!gifCache || !gifCache.data || !gifCache.expiration) {
+      return null;
+    }
+
+    const now = Date.now();
+    if (now > gifCache.expiration) {
+      console.log('GIF icons expired, clearing cache');
+      clearExpiredGifIcons();
+      return null;
+    }
+
+    console.log('GIF icons loaded from cache, expires at:', new Date(gifCache.expiration));
+    return gifCache.data;
+  } catch (err) {
+    console.error('Error getting GIF icons from storage:', err);
+    return null;
+  }
+}
+
+/**
+ * Check if GIF icons are available and not expired
+ * @returns {boolean} true if available, false if expired or not found
+ */
+function isGifIconsAvailable() {
+  try {
+    const gifCache = wx.getStorageSync('gifIcons');
+    if (!gifCache || !gifCache.data || !gifCache.expiration) {
+      return false;
+    }
+
+    const now = Date.now();
+    return now <= gifCache.expiration;
+  } catch (err) {
+    console.error('Error checking GIF icons availability:', err);
+    return false;
+  }
+}
+
+/**
+ * Clear expired GIF icons from storage
+ * @returns {boolean} true on success, false on failure
+ */
+function clearExpiredGifIcons() {
+  try {
+    wx.removeStorageSync('gifIcons');
+    console.log('Expired GIF icons cleared from storage');
+    return true;
+  } catch (err) {
+    console.error('Error clearing expired GIF icons:', err);
+    return false;
+  }
+}
+
 module.exports = {
   getUserId,
   setUserInfo,
   setToken,
-  setUserInfoAndToken
+  setUserInfoAndToken,
+  setGifIconsWithExpiration,
+  getGifIcons,
+  isGifIconsAvailable,
+  clearExpiredGifIcons
 };

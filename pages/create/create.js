@@ -2,6 +2,10 @@
 const { request } = require("../../utils/request");
 const { EVENT_IMAGES, DEFAULT_GIF } = require("../../constants/index");
 const { fetchGifIcons } = require("../../utils/api");
+const {
+	getGifIcons: getGifIconsFromStorage,
+	setGifIconsWithExpiration,
+} = require("../../utils/storage");
 const shareBehavior = require("../../behaviors/share");
 
 Page({
@@ -22,6 +26,7 @@ Page({
 		availableGifs: DEFAULT_GIF,
 		selectedGif: null,
 		isGifLocked: true, // Control GIF overlay visibility
+		showSuccessModal: false, // Control custom success modal visibility
 	},
 
 	/**
@@ -45,48 +50,79 @@ Page({
 			eventDate: todayStr,
 		});
 
+		// Check for cached GIF icons
+		this.checkCachedGifIcons();
+
 		// Initialize rewarded video ad
 		this.initRewardedVideoAd();
 	},
 
 	/**
-	 * Initialize rewarded video ad
+	 * Show success modal
 	 */
+	showSuccessModal() {
+		this.setData({
+			showSuccessModal: true,
+		});
+	},
+
+	/**
+	 * Hide success modal
+	 */
+	hideSuccessModal() {
+		this.setData({
+			showSuccessModal: false,
+		});
+	},
+	checkCachedGifIcons() {
+		const cachedGifs = getGifIconsFromStorage();
+		if (cachedGifs && cachedGifs.length > 0) {
+			this.setData({
+				availableGifs: cachedGifs,
+				isGifLocked: false, // Hide the overlay since we have valid cached icons
+			});
+		} else {
+			this.setData({
+				availableGifs: DEFAULT_GIF,
+				isGifLocked: true, // Show the overlay
+			});
+		}
+	},
 	initRewardedVideoAd() {
 		// 若在开发者工具中无法预览广告，请切换开发者工具中的基础库版本
 		// 在页面中定义激励视频广告
 		if (wx.createRewardedVideoAd) {
 			this.videoAd = wx.createRewardedVideoAd({
-				adUnitId: 'adunit-403748566480b308'
+				adUnitId: "adunit-403748566480b308",
 			});
 
 			this.videoAd.onLoad(() => {
-				console.log('Rewarded video ad loaded successfully');
+				console.log("Rewarded video ad loaded successfully");
 			});
 
 			this.videoAd.onError((err) => {
-				console.error('激励视频广告加载失败', err);
+				console.error("激励视频广告加载失败", err);
 			});
 
 			this.videoAd.onClose((res) => {
-				console.log('Rewarded video ad closed:', res);
+				console.log("Rewarded video ad closed:", res);
 				// 用户点击了【关闭广告】按钮
 				if (res && res.isEnded) {
 					// 正常播放结束，可以下发奖励
-					console.log('User watched the ad completely, unlocking GIF icons');
+					console.log("User watched the ad completely, unlocking GIF icons");
 					this.unlockGifIcons();
 				} else {
 					// 播放中途退出，不下发奖励
-					console.log('User skipped the ad, no reward given');
+					console.log("User skipped the ad, no reward given");
 					wx.showToast({
-						title: '观看完整广告才能解锁',
-						icon: 'none',
-						duration: 2000
+						title: "观看完整广告才能解锁",
+						icon: "none",
+						duration: 2000,
 					});
 				}
 			});
 		} else {
-			console.warn('Rewarded video ad is not supported in this version');
+			console.warn("Rewarded video ad is not supported in this version");
 		}
 	},
 
@@ -97,23 +133,24 @@ Page({
 		if (this.videoAd) {
 			this.videoAd.show().catch(() => {
 				// 失败重试
-				this.videoAd.load()
+				this.videoAd
+					.load()
 					.then(() => this.videoAd.show())
-					.catch(err => {
-						console.error('激励视频广告显示失败', err);
+					.catch((err) => {
+						console.error("激励视频广告显示失败", err);
 						wx.showToast({
-							title: '广告加载失败，请重试',
-							icon: 'none',
-							duration: 2000
+							title: "广告加载失败，请重试",
+							icon: "none",
+							duration: 2000,
 						});
 					});
 			});
 		} else {
-			console.error('Rewarded video ad not initialized');
+			console.error("Rewarded video ad not initialized");
 			wx.showToast({
-				title: '广告功能不可用',
-				icon: 'none',
-				duration: 2000
+				title: "广告功能不可用",
+				icon: "none",
+				duration: 2000,
 			});
 		}
 	},
@@ -124,7 +161,7 @@ Page({
 	unlockGifIcons() {
 		// Show loading indicator
 		wx.showLoading({
-			title: '解锁中...'
+			title: "解锁中...",
 		});
 
 		// Call the API to fetch GIF icons
@@ -132,44 +169,49 @@ Page({
 			(data) => {
 				// Success callback
 				wx.hideLoading();
-				console.log('GIF icons fetched successfully:', data);
+				console.log("GIF icons fetched successfully:", data);
 
 				// Process the API response and update availableGifs
 				if (data && data.values) {
-					const gifData = data.values.map(gif => ({
+					const gifData = data.values.map((gif) => ({
 						name: gif.name,
-						url: gif.url
+						url: gif.url,
 					}));
+
+					// Save GIF icons with expiration
+					const saved = setGifIconsWithExpiration(gifData);
+					if (saved) {
+						console.log("GIF icons saved with 24-hour expiration");
+					} else {
+						console.error("Failed to save GIF icons to storage");
+					}
 
 					this.setData({
 						availableGifs: gifData,
 						isGifLocked: false, // Hide the overlay
 					});
 
-					console.log('Available GIFs updated:', gifData);
+					console.log("Available GIFs updated:", gifData);
 
-					// wx.showToast({
-					// 	title: 'GIF图标已解锁',
-					// 	icon: 'success',
-					// 	duration: 2000
-					// });
+					// Show custom success modal
+					this.showSuccessModal();
 				} else {
-					console.error('Invalid API response structure:', data);
+					console.error("Invalid API response structure:", data);
 					wx.showToast({
-						title: '数据格式错误',
-						icon: 'none',
-						duration: 2000
+						title: "数据格式错误",
+						icon: "none",
+						duration: 2000,
 					});
 				}
 			},
 			(error) => {
 				// Error callback
 				wx.hideLoading();
-				console.error('Failed to fetch GIF icons:', error);
+				console.error("Failed to fetch GIF icons:", error);
 				wx.showToast({
-					title: '获取GIF图标失败',
-					icon: 'none',
-					duration: 2000
+					title: "获取GIF图标失败",
+					icon: "none",
+					duration: 2000,
 				});
 			}
 		);
@@ -248,8 +290,12 @@ Page({
 		});
 
 		const gifName = e.currentTarget.dataset.gif;
+		// Find the selected GIF object from availableGifs
+		const selectedGifObj = this.data.availableGifs.find(gif => gif.name === gifName);
+		const gifUrl = selectedGifObj ? selectedGifObj.url : null;
+
 		this.setData({
-			selectedGif: gifName,
+			selectedGif: gifUrl, // Set to URL instead of name
 			selectedImage: null, // Clear image selection for mutual exclusivity
 			selectedLetter: null, // Clear letter selection for mutual exclusivity
 		});
@@ -416,5 +462,4 @@ Page({
 	 * Called when page reach bottom
 	 */
 	onReachBottom() {},
-
 });

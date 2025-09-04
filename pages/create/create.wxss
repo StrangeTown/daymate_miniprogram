@@ -200,7 +200,7 @@
   background-color: #fff;
   box-sizing: border-box;
   margin-top: 8rpx;
-  margin-bottom: 24rpx;
+  margin-top: 24rpx;
 }
 
 .input-field:focus {
@@ -276,7 +276,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4rpx);
+  -webkit-backdrop-filter: blur(4rpx);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -309,6 +311,7 @@
   text-align: center;
   overflow: visible;
   margin: 0 auto;
+  text-decoration: underline;
 }
 
 /* GIF Overlay Styles */
@@ -331,4 +334,79 @@
   position: relative;
   width: 100%;
   height: 240rpx;
+}
+
+/* Custom Modal Styles */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8rpx);
+  -webkit-backdrop-filter: blur(8rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.custom-modal {
+  background-color: #fff;
+  border-radius: 16rpx;
+  width: 600rpx;
+  max-width: 80%;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  padding: 40rpx 40rpx 20rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-content {
+  padding: 20rpx 40rpx;
+  text-align: center;
+}
+
+.modal-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.modal-message {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+  display: block;
+}
+
+.modal-footer {
+  padding: 20rpx 40rpx 40rpx;
+  text-align: center;
+}
+
+.modal-confirm-btn {
+  background-color: #E96354;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  padding: 20rpx 60rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  min-width: 200rpx;
+}
+
+.modal-confirm-btn::after {
+  border: none;
 }
