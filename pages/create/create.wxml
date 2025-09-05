@@ -72,7 +72,7 @@
 
       <!-- GIF Part -->
       <view class="marker-subsection">
-        <view class="gif-container">
+        <view class="gif-container {{!isGifLocked ? 'unlocked' : ''}}">
           <scroll-view class="images-scroll gif-images-scroll" scroll-y="true" enable-flex="true">
             <view class="images-list">
               <view
@@ -91,7 +91,7 @@
           <view wx:if="{{isGifLocked}}" class="gif-overlay">
             <view class="lock-container" bindtap="onLockContainerTap">
               <text class="lock-icon">🔒</text>
-              <view class="lock-tip">观看广告可以使用动态图标</view>
+              <view class="lock-tip">看一段广告，立即解锁动画图标！</view>
             </view>
           </view>
         </view>

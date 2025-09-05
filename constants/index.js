@@ -233,36 +233,68 @@ const EVENT_IMAGES = [
 
 const DEFAULT_GIF = [
   {
-    name: 'gif_cake',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_art',
+    url: '/assets/images/event_gif_placeholders/art.png'
   },
   {
-    name: 'gif_cake2',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_bicycle',
+    url: '/assets/images/event_gif_placeholders/bicycle.png'
   },
   {
-    name: 'gif_cake3',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_boss',
+    url: '/assets/images/event_gif_placeholders/boss.png'
   },
   {
-    name: 'gif_cake4',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_cruise_ship',
+    url: '/assets/images/event_gif_placeholders/cruise-ship.png'
   },
   {
-    name: 'gif_cake5',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_live',
+    url: '/assets/images/event_gif_placeholders/live.png'
   },
   {
-    name: 'gif_cake6',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_microphone',
+    url: '/assets/images/event_gif_placeholders/microphone.png'
   },
   {
-    name: 'gif_cake7',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_new_car',
+    url: '/assets/images/event_gif_placeholders/new-car.png'
   },
   {
-    name: 'gif_cake8',
-    url: '/assets/images/event_gif/default-cake.gif'
+    name: 'gif_painting',
+    url: '/assets/images/event_gif_placeholders/painting.png'
+  },
+  {
+    name: 'gif_park',
+    url: '/assets/images/event_gif_placeholders/park.png'
+  },
+  {
+    name: 'gif_ping_pong',
+    url: '/assets/images/event_gif_placeholders/ping-pong.png'
+  },
+  {
+    name: 'gif_plane',
+    url: '/assets/images/event_gif_placeholders/plane.png'
+  },
+  {
+    name: 'gif_ski',
+    url: '/assets/images/event_gif_placeholders/ski.png'
+  },
+  {
+    name: 'gif_song',
+    url: '/assets/images/event_gif_placeholders/song.png'
+  },
+  {
+    name: 'gif_stage',
+    url: '/assets/images/event_gif_placeholders/stage.png'
+  },
+  {
+    name: 'gif_tennis_racket',
+    url: '/assets/images/event_gif_placeholders/tennis-racket.png'
+  },
+  {
+    name: 'gif_train',
+    url: '/assets/images/event_gif_placeholders/train.png'
   }
 ];
 
