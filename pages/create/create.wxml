@@ -27,28 +27,10 @@
     </view>
 
     <!-- Marker Section -->
-    <view wx:if="{{letters.length > 0}}" class="section-part">
+    <view class="section-part">
       <view class="section-header">
         <text class="section-title">日历标记</text>
       </view>
-      
-      <!-- Letters Part -->
-      <view class="marker-subsection">
-        <view class="letters-list">
-          <view
-            wx:for="{{letters}}"
-            wx:key="index"
-            class="letter-item {{selectedLetter === item ? 'selected' : ''}} {{selectedImage ? 'disabled' : ''}}"
-            bindtap="onLetterSelect"
-            data-letter="{{item}}"
-          >
-            {{item}}
-          </view>
-        </view>
-      </view>
-
-      <!-- Separator -->
-      <view class="marker-separator"></view>
 
       <!-- Images Part -->
       <view class="marker-subsection">
@@ -57,7 +39,7 @@
             <view
               wx:for="{{availableImages}}"
               wx:key="index"
-              class="image-item {{selectedImage === item.name ? 'selected' : ''}} {{selectedLetter ? 'disabled' : ''}}"
+              class="image-item {{selectedImage === item.name ? 'selected' : ''}} {{selectedGif || selectedLetter ? 'disabled' : ''}}"
               bindtap="onImageSelect"
               data-image="{{item.name}}"
             >
@@ -93,6 +75,25 @@
               <text class="lock-icon">🔒</text>
               <view class="lock-tip">看一段广告，立即解锁动画图标！</view>
             </view>
+          </view>
+        </view>
+      </view>
+
+
+      <!-- Separator -->
+      <view wx:if="{{letters.length > 0}}" class="marker-separator"></view>
+
+      <!-- Letters Part -->
+      <view wx:if="{{letters.length > 0}}" class="marker-subsection">
+        <view class="letters-list">
+          <view
+            wx:for="{{letters}}"
+            wx:key="index"
+            class="letter-item {{selectedLetter === item ? 'selected' : ''}} {{selectedImage || selectedGif ? 'disabled' : ''}}"
+            bindtap="onLetterSelect"
+            data-letter="{{item}}"
+          >
+            {{item}}
           </view>
         </view>
       </view>

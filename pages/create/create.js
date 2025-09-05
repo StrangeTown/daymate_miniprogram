@@ -261,6 +261,7 @@ Page({
 		this.setData({
 			selectedLetter: letter,
 			selectedImage: null, // Clear image selection for mutual exclusivity
+			selectedGif: null, // Clear GIF selection for mutual exclusivity
 		});
 	},
 
@@ -277,6 +278,7 @@ Page({
 		this.setData({
 			selectedImage: imageName,
 			selectedLetter: null, // Clear letter selection for mutual exclusivity
+      selectedGif: null, // Clear GIF selection for mutual exclusivity
 		});
 	},
 

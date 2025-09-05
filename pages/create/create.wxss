@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 16rpx 0;
+  margin: 24rpx 0;
   position: relative;
 }
 
@@ -56,7 +56,7 @@
   content: '';
   flex: 1;
   height: 1rpx;
-  background-color: #e9ecef;
+  background-color: #ccc;
 }
 
 .marker-separator-text {
@@ -64,13 +64,6 @@
   font-size: 26rpx;
   color: #6c757d;
   background-color: #f8f9fa;
-}
-
-.marker-separator::after {
-  content: '';
-  flex: 1;
-  height: 1rpx;
-  background-color: #e9ecef;
 }
 
 .letters-section {
