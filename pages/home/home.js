@@ -14,6 +14,7 @@ Page({
 		countdownTitle: "",
 		showModal: false,
 		events: [], // Store fetched events from API
+		isPreviewMode: false, // Track if app is in preview mode
 	},
 
 	/**
@@ -333,12 +334,32 @@ Page({
 	},
 
 	/**
+	 * Navigate to the actual mini program from preview mode
+	 */
+	navigateToMiniProgram() {
+		wx.navigateToMiniProgram({
+			appId: 'wx21b1c15603cfaee8', // Will be filled by WeChat when published
+			path: 'pages/home/home',
+			success: () => {
+				console.log('Successfully navigated to mini program');
+			},
+			fail: (error) => {
+				console.error('Failed to navigate to mini program:', error);
+			}
+		});
+	},
+
+	/**
 	 * Handle modal close
 	 */
 	onModalClose() {
-		this.setData({
-			showModal: false,
-		});
+		if (this.data.isPreviewMode) {
+			this.navigateToMiniProgram();
+		} else {
+			this.setData({
+				showModal: false,
+			});
+		}
 	},
 
 	/**
@@ -475,6 +496,23 @@ Page({
 	 */
 	onShow() {
 		const app = getApp();
+		const launchOptions = wx.getLaunchOptionsSync();
+		const isPreviewMode = launchOptions.scene === 1154;
+		
+		this.setData({
+			isPreviewMode: isPreviewMode
+		});
+		
+		if (isPreviewMode) {
+			// Set preview mode values
+			this.setData({
+				countdownTitle: '下一个重要的日子',
+				countdownDays: '??',
+				showModal: true
+			});
+			return;
+		}
+		
 		if (app.loginPromise) {
 			app.loginPromise.then(() => {
 				this.fetchEvents();

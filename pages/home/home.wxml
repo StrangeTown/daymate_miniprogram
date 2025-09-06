@@ -111,6 +111,9 @@
           <text wx:else>距离 <text class="event-name">{{countdownTitle}}</text> 还有</text>
         </text>
       </view>
+      <view wx:if="{{isPreviewMode}}" class="preview-navigate-btn" bindtap="navigateToMiniProgram">
+        <text>前往小程序</text>
+      </view>
     </view>
   </view>
 </view>
