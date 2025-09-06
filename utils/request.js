@@ -1,8 +1,8 @@
 function getBaseURL() {
-	const envVersion = __wxConfig.envVersion;
-	return envVersion === "release"
-		? "https://www.itwork.club/daymate"
-		: "https://www.itwork.club/daymate_test";
+  const envVersion = __wxConfig.envVersion;
+  return envVersion === 'develop'
+    ? "https://www.itwork.club/daymate_test"
+    : "https://www.itwork.club/daymate";
 }
 
 function getToken() {
